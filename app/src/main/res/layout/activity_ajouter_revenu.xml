@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ihm.activity.AjouterRevenuActivity">
+
+    <fragment
+        android:id="@+id/fragment_en_tete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="com.homa.ihm.fragment.EnTeteFragment"/>
+
+    <TextView
+        android:id="@+id/tv_ajouter_un_revenu"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/fragment_en_tete"
+        android:layout_marginTop="20dp"
+        android:background="#CB4335"
+        android:gravity="center"
+        android:text="@string/ajouter_un_revenu"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_label_libelle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/libelle"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_below="@id/tv_ajouter_un_revenu"
+        android:layout_marginTop="20dp"/>
+
+    <EditText
+        android:id="@+id/et_libelle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_label_libelle"
+        android:maxLength="30"/>
+
+    <TextView
+        android:id="@+id/tv_label_montant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/montant"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_below="@id/et_libelle"
+        android:layout_marginTop="20dp"/>
+
+    <EditText
+        android:id="@+id/et_montant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_label_montant"
+        android:inputType="numberDecimal"/>
+
+    <TextView
+        android:id="@+id/tv_label_reception"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/date_de_reception"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_below="@id/et_montant"
+        android:layout_marginTop="20dp"/>
+
+    <EditText
+        android:id="@+id/et_reception"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_label_reception"
+        android:inputType="date"/>
+
+    <Button
+        android:id="@+id/btn_valider_ajout_revenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#CB4335"
+        android:text="@string/valider"
+        android:layout_below="@id/et_reception"
+        android:onClick="validerAjoutRevenu"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/btn_retour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#273746"
+        android:text="@string/retour"
+        android:layout_below="@id/btn_valider_ajout_revenu"
+        android:onClick="clickRetourAjouterRevenu"/>
+</RelativeLayout>

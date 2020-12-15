@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item >
+        <rotate android:fromDegrees="0"
+            android:pivotY="50%"
+            android:pivotX="50%"
+            android:toDegrees="70">
+            <shape android:shape="ring"
+                android:useLevel="true">
+                <solid android:color="#E74C3C"/>
+            </shape>
+        </rotate>
+    </item>
+    <item >
+        <rotate android:fromDegrees="70"
+            android:pivotY="50%"
+            android:pivotX="50%"
+            android:toDegrees="140">
+            <shape android:shape="ring"
+                android:useLevel="true">
+                <solid android:color="#F1C40F"/>
+            </shape>
+        </rotate>
+    </item>
+    <item >
+        <rotate android:fromDegrees="140"
+            android:pivotY="50%"
+            android:pivotX="50%"
+            android:toDegrees="210">
+            <shape android:shape="ring"
+                android:useLevel="true">
+                <solid android:color="#3498DB"/>
+            </shape>
+        </rotate>
+    </item>
+    <item >
+        <rotate android:fromDegrees="210"
+            android:pivotY="50%"
+            android:pivotX="50%"
+            android:toDegrees="280">
+            <shape android:shape="ring"
+                android:useLevel="true">
+                <solid android:color="#2ECC71"/>
+            </shape>
+        </rotate>
+    </item>
+    <item >
+        <rotate android:fromDegrees="280"
+            android:pivotY="50%"
+            android:pivotX="50%"
+            android:toDegrees="360">
+            <shape android:shape="ring"
+                android:useLevel="true">
+                <solid android:color="#F39C12"/>
+            </shape>
+        </rotate>
+    </item>
+</layer-list>

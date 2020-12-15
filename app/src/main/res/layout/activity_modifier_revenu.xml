@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ihm.activity.ModifierRevenuActivity">
+
+    <fragment
+        android:id="@+id/fragment_en_tete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="com.homa.ihm.fragment.EnTeteFragment"/>
+
+    <TextView
+        android:id="@+id/tv_modifier_un_revenu"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/fragment_en_tete"
+        android:layout_marginTop="20dp"
+        android:background="#CB4335"
+        android:gravity="center"
+        android:text="@string/modifier_un_revenu"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/tv_label_libelle_modif_revenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/libelle"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_below="@id/tv_modifier_un_revenu"
+        android:layout_marginTop="20dp"/>
+
+    <EditText
+        android:id="@+id/et_libelle_modif_revenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_label_libelle_modif_revenu"
+        android:maxLength="30"/>
+
+    <TextView
+        android:id="@+id/tv_label_montant_modif_revenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/montant"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_below="@id/et_libelle_modif_revenu"
+        android:layout_marginTop="20dp"/>
+
+    <EditText
+        android:id="@+id/et_montant_modif_revenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_label_montant_modif_revenu"
+        android:inputType="numberDecimal"/>
+
+    <TextView
+        android:id="@+id/tv_label_modif_reception"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/date_de_reception"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_below="@id/et_montant_modif_revenu"
+        android:layout_marginTop="20dp"/>
+
+    <EditText
+        android:id="@+id/et_modif_reception"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_label_modif_reception"
+        android:inputType="date"/>
+
+    <GridLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_modif_reception">
+
+        <!--        android:onClick="validerAjoutRevenu"-->
+
+        <Button
+            android:id="@+id/btn_valider_modif_revenu"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#27AE60"
+            android:gravity="center"
+            android:text="@string/valider"
+            android:onClick="clickValiderModifRevenu"/>
+
+        <Button
+            android:id="@+id/btn_supprimer_revenu"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="2"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#CB4335"
+            android:text="@string/supprimer"
+            android:onClick="clickSupprimerRevenu"/>
+
+    </GridLayout>
+
+    <Button
+        android:id="@+id/btn_retour_modif_revenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#273746"
+        android:text="@string/retour"
+        android:layout_below="@id/linearLayout"
+        android:onClick="clickRetourModifRevenu"/>
+</RelativeLayout>

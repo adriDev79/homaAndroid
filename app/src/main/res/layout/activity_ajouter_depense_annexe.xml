@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ihm.activity.AjouterDepenseAnnexeActivity">
+
+  <fragment
+      android:id="@+id/fragment_en_tete"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:name="com.homa.ihm.fragment.EnTeteFragment"/>
+
+  <TextView
+      android:id="@+id/tv_ajouter_une_depense_annexe"
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      android:layout_below="@id/fragment_en_tete"
+      android:layout_marginTop="20dp"
+      android:background="#F1C40F"
+      android:gravity="center"
+      android:text="Ajouter une dépense annexe"
+      android:textColor="@color/white"
+      android:textSize="20sp"
+      android:textStyle="bold" />
+
+  <TextView
+      android:id="@+id/tv_label_select_depense_annexe"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/type_de_d_pense"
+      android:textSize="15sp"
+      android:textStyle="bold"
+      android:layout_below="@id/tv_ajouter_une_depense_annexe"
+      android:layout_marginTop="20dp"/>
+
+  <Spinner
+      android:id="@+id/spinner_depense_annexe"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/tv_label_select_depense_annexe"/>
+
+  <TextView
+      android:id="@+id/tv_label_libelle_depense_annexe"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/libelle"
+      android:textSize="15sp"
+      android:textStyle="bold"
+      android:layout_below="@id/spinner_depense_annexe"
+      android:layout_marginTop="20dp"/>
+
+  <EditText
+      android:id="@+id/et_libelle_depense_annexe"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/tv_label_libelle_depense_annexe"
+      android:maxLength="30"/>
+
+  <TextView
+      android:id="@+id/tv_label_montant_depense_annexe"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/montant"
+      android:textSize="15sp"
+      android:textStyle="bold"
+      android:layout_below="@id/et_libelle_depense_annexe"
+      android:layout_marginTop="20dp"/>
+
+  <EditText
+      android:id="@+id/et_montant_depense_annexe"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/tv_label_montant_depense_annexe"
+      android:inputType="numberDecimal"/>
+
+  <TextView
+      android:id="@+id/tv_label_reception_depense_annexe"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/date_de_reception"
+      android:textSize="15sp"
+      android:textStyle="bold"
+      android:layout_below="@id/et_montant_depense_annexe"
+      android:layout_marginTop="20dp"/>
+
+  <EditText
+      android:id="@+id/et_reception_depense_annexe"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/tv_label_reception_depense_annexe"
+      android:inputType="date"/>
+
+  <Button
+      android:id="@+id/btn_valider_ajout_depense_annexe"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:backgroundTint="#CB4335"
+      android:text="@string/valider"
+      android:layout_below="@id/et_reception_depense_annexe"
+      android:layout_marginTop="20dp"
+      android:onClick="ajouterDepenseAnnexe"/>
+
+  <Button
+      android:id="@+id/btn_retour_depense_annexe"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:backgroundTint="#273746"
+      android:text="@string/retour"
+      android:layout_below="@id/btn_valider_ajout_depense_annexe"
+      android:onClick="clickRetourAjouterDepenseAnnexe"/>
+
+  </RelativeLayout>

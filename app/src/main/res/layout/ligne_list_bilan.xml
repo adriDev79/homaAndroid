@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp">
+
+    <TextView
+        android:id="@+id/tv_ligne_list_bilan_libelle"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="Lorem ipsum blablabla blablabla"
+        android:textSize="15sp"
+        android:textColor="#273746"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginLeft="5dp"/>
+
+    <TextView
+        android:id="@+id/tv_ligne_list_bilan_montant"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="1582.00$"
+        android:textColor="#27AE60"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:gravity="center|right"
+        android:layout_marginRight="5dp"/>
+
+</LinearLayout>

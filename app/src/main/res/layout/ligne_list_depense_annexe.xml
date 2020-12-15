@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp">
+
+    <TextView
+        android:id="@+id/tv_type_depense_annexe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="type de depense"
+        android:textSize="15sp"
+        android:textColor="#F1C40F"
+        android:textStyle="bold"
+        android:layout_marginLeft="5dp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_depense_annexe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_type_depense_annexe">
+
+        <TextView
+            android:id="@+id/tv_ligne_list_depense_annexe_libelle"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Lorem ipsum blablabla blablabla"
+            android:textSize="15sp"
+            android:textColor="#273746"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginLeft="5dp"/>
+
+        <TextView
+            android:id="@+id/tv_ligne_list_depense_annexe_montant"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="1582.00$"
+            android:textColor="#CB4335"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:gravity="center|right"
+            android:layout_marginRight="5dp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_label_prelevement_depense_annexe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/pr_l_vement"
+        android:textSize="12sp"
+        android:textColor="#273746"
+        android:textStyle="bold"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@id/ll_depense_annexe"/>
+
+    <TextView
+        android:id="@+id/tv_date_prelevement_depense_annexe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="xxxxx"
+        android:textSize="12sp"
+        android:textColor="#273746"
+        android:textStyle="bold"
+        android:layout_marginLeft="95dp"
+        android:layout_below="@id/ll_depense_annexe"/>
+
+</RelativeLayout>
