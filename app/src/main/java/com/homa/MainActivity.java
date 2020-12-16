@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
             listRevenu.setAdapter(listRevenuAdapter);
 
             ViewGroup.LayoutParams params = listRevenu.getLayoutParams();
-            int sizeHeight = revenus.size() * 200;
+            int sizeHeight = revenus.size() * 250;
             params.height = sizeHeight;
             listRevenu.setLayoutParams(params);
 
@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
             ListView lvDepenseFixe = findViewById(R.id.lv_depense_fixe);
             lvDepenseFixe.setAdapter(listDepenseFixeAdapter);
             ViewGroup.LayoutParams params = lvDepenseFixe.getLayoutParams();
-            int sizeHeight = depenseFixes.size() * 260;
+            int sizeHeight = depenseFixes.size() * 310;
             params.height = sizeHeight;
             lvDepenseFixe.setLayoutParams(params);
 
@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
             ListDepenseAnnexeAdapter listDepenseAnnexeAdapter = new ListDepenseAnnexeAdapter(MainActivity.this, R.layout.ligne_list_depense_annexe, depenseAnnexes);
             ListView lvDepenseAnnexe = findViewById(R.id.lv_depense_annexe);
             lvDepenseAnnexe.setAdapter(listDepenseAnnexeAdapter);
-            lvDepenseAnnexe.getLayoutParams().height = depenseAnnexes.size() * 260;
+            lvDepenseAnnexe.getLayoutParams().height = depenseAnnexes.size() * 310;
 
             lvDepenseAnnexe.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
             ListView lvSolde = findViewById(R.id.lv_solde);
             lvSolde.setAdapter(listSoldeAdapter);
             ViewGroup.LayoutParams params = lvSolde.getLayoutParams();
-            int sizeHeight = soldes.size() * 260;
+            int sizeHeight = soldes.size() * 250;
             params.height = sizeHeight;
             lvSolde.setLayoutParams(params);
 
@@ -285,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
             ListView lvBilan = findViewById(R.id.lv_bilan);
             lvBilan.setAdapter(listBilanAdapter);
             ViewGroup.LayoutParams params = lvBilan.getLayoutParams();
-            int sizeHeight = totaux.size() * 120;
+            int sizeHeight = totaux.size() * 140;
             params.height = sizeHeight;
             lvBilan.setLayoutParams(params);
         }

@@ -92,7 +92,8 @@
             android:id="@+id/lv_bilan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/fragment_en_tete_bilan">
+            android:layout_below="@id/fragment_en_tete_bilan"
+            android:layout_marginBottom="20dp">
         </ListView>
 
     </RelativeLayout>
