@@ -48,7 +48,7 @@ public class ModifierSoldeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int id = Integer.parseInt(intent.getStringExtra("idSolde"));
 
-        if (!(libelle.equals(HomaUtils.EMPTY ) && montant == 0f)) {
+        if (!HomaUtils.EMPTY.equals(libelle) && montant != 0f) {
             Log.i(HomaUtils.TAG, HomaUtils.DEBUT + HomaUtils.ACTION + HomaUtils.ACTION_MODIFIER_SOLDE);
 
             try {

@@ -16,14 +16,30 @@
         android:textStyle="bold" />
 
     <Button
-        android:layout_width="70dp"
+        android:layout_width="90dp"
         android:layout_height="match_parent"
         android:layout_gravity="right|center"
+        android:layout_marginRight="80dp"
         android:backgroundTint="#D4AC0D"
-        android:text="@string/add"
-        android:textSize="20sp"
+        android:text="@string/ajouter"
+        android:textSize="10sp"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:onClick="clickAjouterDepenseAnnexe"
         tools:ignore="OnClick" />
+
+    <Button
+        android:id="@+id/btn_visibility_depenseAnnexe"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right|center"
+        android:backgroundTint="#D4AC0D"
+        android:text="@string/moins"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_marginRight="5dp"
+        android:onClick="clickVisibilityListViewDepenseAnnexe"/>
+
+
 </FrameLayout>

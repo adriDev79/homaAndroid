@@ -67,9 +67,10 @@
         android:layout_below="@id/et_montant_modif_solde">
 
         <Button
-            android:id="@+id/btn_valider_modif_Solde"
-            android:layout_width="190dp"
+            android:id="@+id/btn_valider_modif_solde"
+            android:layout_width="175dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_row="0"
             android:layout_column="0"
             android:layout_marginTop="20dp"
@@ -79,25 +80,32 @@
             android:onClick="clickValiderModifSolde"/>
 
         <Button
-            android:id="@+id/btn_supprimer_Solde"
-            android:layout_width="190dp"
+            android:id="@+id/btn_supprimer_solde"
+            android:layout_width="175dp"
             android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
             android:layout_row="0"
             android:layout_column="2"
             android:layout_marginTop="20dp"
             android:backgroundTint="#CB4335"
             android:text="@string/supprimer"
             android:onClick="clickSupprimerSolde"/>
-
     </GridLayout>
 
-    <Button
-        android:id="@+id/btn_retour_modif_solde"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#273746"
-        android:text="@string/retour"
-        android:layout_below="@id/linearLayout"
-        android:onClick="clickRetourModifSolde"/>
+        android:layout_below="@+id/linearLayout">
+
+        <Button
+            android:id="@+id/btn_retour_modif_solde"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:backgroundTint="#273746"
+            android:onClick="clickRetourModifSolde"
+            android:text="@string/retour" />
+    </LinearLayout>
 
 </RelativeLayout>

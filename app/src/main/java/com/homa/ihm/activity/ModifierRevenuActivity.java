@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.homa.MainActivity;
@@ -40,7 +41,7 @@ public class ModifierRevenuActivity extends AppCompatActivity {
         EditText etMontant = findViewById(R.id.et_montant_modif_revenu);
         etMontant.setText(intent.getStringExtra("montant"));
 
-        EditText etDateReception = findViewById(R.id.et_modif_reception);
+        TextView etDateReception = findViewById(R.id.tv_modif_reception);
         etDateReception.setText(intent.getStringExtra("dateReception"));
     }
 
@@ -51,13 +52,13 @@ public class ModifierRevenuActivity extends AppCompatActivity {
         EditText etMontant = findViewById(R.id.et_montant_modif_revenu);
         float montant = etMontant.getText().toString().equals("") ? 0f : Float.parseFloat(etMontant.getText().toString());
 
-        EditText etDateReception = findViewById(R.id.et_modif_reception);
+        TextView etDateReception = findViewById(R.id.tv_modif_reception);
         String dateReception = etDateReception.getText().toString().equals("")? HomaUtils.NON_RENSEIGNE : etDateReception.getText().toString();
 
         Intent intent = getIntent();
         int id = Integer.parseInt(intent.getStringExtra("id"));
 
-        if (!(libelle.equals(HomaUtils.EMPTY ) && montant == 0f)) {
+        if (!HomaUtils.EMPTY.equals(libelle) && montant != 0f) {
             Log.i(HomaUtils.TAG, HomaUtils.DEBUT + HomaUtils.ACTION + HomaUtils.ACTION_MODIFIER_REVENU);
             Date date = new Date();
             String today = date.toString();
@@ -122,5 +123,10 @@ public class ModifierRevenuActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    public void clickCalendar(View view) {
+        TextView textView = findViewById(R.id.tv_modif_reception);
+        HomaUtils.calendar(view.getContext(), textView);
     }
 }

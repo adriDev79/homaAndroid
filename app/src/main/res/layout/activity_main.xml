@@ -23,7 +23,6 @@
             android:layout_height="wrap_content"
             android:name="com.homa.ihm.fragment.EnTeteRevenuFragment"
             android:layout_below="@id/fragment_en_tete"
-            android:layout_marginTop="20dp"
             tools:ignore="MissingConstraints" />
 
         <ListView

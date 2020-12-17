@@ -1,6 +1,24 @@
 package com.homa.utils;
 
+import android.app.DatePickerDialog;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.homa.MainActivity;
+import com.homa.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 public class HomaUtils {
 
@@ -57,7 +75,82 @@ public class HomaUtils {
         map.put("Vacance", 14);
         map.put("Aménagement de la maison", 15);
         map.put("Soin", 16);
+        map.put("Autres", 17);
 
         return map;
+    }
+
+    public static void calendar(Context context, TextView textView) {
+        Calendar myCalendar = Calendar.getInstance();
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                String myFormat = "dd/MM/yyyy"; //In which you need put here
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
+                textView.setText(sdf.format(myCalendar.getTime()));
+            }
+        };
+        new DatePickerDialog(context, date, myCalendar
+                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    public static void visibilityListViewRevenu(ListView listView, Button button, MainActivity.AsyncTaskListRevenu asyncTask) {
+        if (listView.getVisibility() == View.VISIBLE) {
+            button.setText(R.string.add);
+            listView.setVisibility(View.INVISIBLE);
+            ViewGroup.LayoutParams params = listView.getLayoutParams();
+            params.height = 0;
+            listView.setLayoutParams(params);
+        } else {
+            asyncTask.execute();
+            button.setText(R.string.moins);
+            listView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public static void visibilityListViewDepenseFixe(ListView listView, Button button, MainActivity.AsyncTaskListDepenseFixe asyncTask) {
+        if (listView.getVisibility() == View.VISIBLE) {
+            button.setText(R.string.add);
+            listView.setVisibility(View.INVISIBLE);
+            ViewGroup.LayoutParams params = listView.getLayoutParams();
+            params.height = 0;
+            listView.setLayoutParams(params);
+        } else {
+            asyncTask.execute();
+            button.setText(R.string.moins);
+            listView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public static void visibilityListViewDepenseAnnexe(ListView listView, Button button, MainActivity.AsyncTaskListDepenseAnnexe asyncTask) {
+        if (listView.getVisibility() == View.VISIBLE) {
+            button.setText(R.string.add);
+            listView.setVisibility(View.INVISIBLE);
+            ViewGroup.LayoutParams params = listView.getLayoutParams();
+            params.height = 0;
+            listView.setLayoutParams(params);
+        } else {
+            asyncTask.execute();
+            button.setText(R.string.moins);
+            listView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public static void visibilityListViewSolde(ListView listView, Button button, MainActivity.AsyncTaskListSolde asyncTask) {
+        if (listView.getVisibility() == View.VISIBLE) {
+            button.setText(R.string.add);
+            listView.setVisibility(View.INVISIBLE);
+            ViewGroup.LayoutParams params = listView.getLayoutParams();
+            params.height = 0;
+            listView.setLayoutParams(params);
+        } else {
+            asyncTask.execute();
+            button.setText(R.string.moins);
+            listView.setVisibility(View.VISIBLE);
+        }
     }
 }

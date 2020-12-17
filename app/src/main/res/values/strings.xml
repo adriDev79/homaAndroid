@@ -17,8 +17,12 @@
     <string name="modifier_d_pense_annexe">Modifier dépense annexe</string>
     <string name="ajouter_un_solde">Ajouter un solde</string>
     <string name="bilan">Bilan</string>
-    <string name="solde_compte_s_bancaire_s">Solde compte(s) bancaire(s)</string>
+    <string name="solde_compte_s_bancaire_s">Solde compte(s)</string>
     <string name="date_de_reception">Date de reception:</string>
     <string name="recu_le">Reçu le:</string>
     <string name="pr_l_vement">Prélévement le:</string>
+    <string name="ajouter">Ajouter</string>
+    <string name="moins">-</string>
+    <string name="choisir_une_date">Choisir une date</string>
+    <string name="date_de_prelevement">Date de prélévement :</string>
 </resources>

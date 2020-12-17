@@ -59,23 +59,32 @@
         android:layout_below="@id/tv_label_montant_solde"
         android:inputType="numberSigned|numberDecimal"/>
 
-    <Button
-        android:id="@+id/btn_valider_ajout_solde"
+    <GridLayout
+        android:id="@+id/ll_btn_ajouter_revenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#CB4335"
-        android:text="@string/valider"
-        android:layout_below="@id/et_montant_solde"
-        android:onClick="validerAjoutSolde"
-        android:layout_marginTop="20dp"/>
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/et_montant_solde">
 
-    <Button
-        android:id="@+id/btn_retour_solde"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#273746"
-        android:text="@string/retour"
-        android:layout_below="@id/btn_valider_ajout_solde"
-        android:onClick="clickRetourAjouterSolde"/>
+        <Button
+            android:id="@+id/btn_valider_ajout_solde"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:backgroundTint="#CB4335"
+            android:text="@string/valider"
+            android:onClick="validerAjoutSolde"
+            />
 
+        <Button
+            android:id="@+id/btn_retour_solde"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="5dp"
+            android:backgroundTint="#273746"
+            android:text="@string/retour"
+            android:onClick="clickRetourAjouterSolde"/>
+    </GridLayout>
 </RelativeLayout>

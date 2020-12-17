@@ -29,7 +29,9 @@
         android:id="@+id/tv_label_select__modif_depense_annexe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
         android:text="@string/type_de_d_pense"
+        android:textColor="#273746"
         android:textSize="15sp"
         android:textStyle="bold"
         android:layout_below="@id/tv_modifier_une_depense_annexe"
@@ -39,13 +41,16 @@
         android:id="@+id/spinner_modif_depense_annexe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
         android:layout_below="@id/tv_label_select__modif_depense_annexe"/>
 
     <TextView
         android:id="@+id/tv_label_libelle_modif_depense_annexe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
         android:text="@string/libelle"
+        android:textColor="#273746"
         android:textSize="15sp"
         android:textStyle="bold"
         android:layout_below="@id/spinner_modif_depense_annexe"
@@ -62,7 +67,9 @@
         android:id="@+id/tv_label_montant_modif_depense_annexe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
         android:text="@string/montant"
+        android:textColor="#273746"
         android:textSize="15sp"
         android:textStyle="bold"
         android:layout_below="@id/et_libelle_modif_depense_annexe"
@@ -79,29 +86,49 @@
         android:id="@+id/tv_label_reception_modif_depense_annexe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/date_de_reception"
+        android:layout_marginLeft="5dp"
+        android:text="@string/date_de_prelevement"
+        android:textColor="#273746"
         android:textSize="15sp"
         android:textStyle="bold"
         android:layout_below="@id/et_montant_modif_depense_annexe"
         android:layout_marginTop="20dp"/>
 
-    <EditText
-        android:id="@+id/et_reception_modif_depense_annexe"
+    <Button
+        android:id="@+id/btn_modif_choisir_date_depense_annexe"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="5dp"
+        android:backgroundTint="#273746"
+        android:text="@string/choisir_une_date"
+        android:textSize="10sp"
+        android:layout_below="@id/tv_label_reception_modif_depense_annexe"
+        android:onClick="clickCalendarModifDepenseAnnexe"
+        />
+
+    <TextView
+        android:id="@+id/tv_modif_date_prelevement_depense_annexe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_label_reception_modif_depense_annexe"
-        android:inputType="date"/>
+        android:layout_marginLeft="5dp"
+        android:textColor="#273746"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_below="@id/btn_modif_choisir_date_depense_annexe"
+        />
 
     <GridLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/grid_modif_depense_annexe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/et_reception_modif_depense_annexe">
+        android:layout_below="@id/tv_modif_date_prelevement_depense_annexe">
 
         <Button
             android:id="@+id/btn_valider_modif_depense_annexe"
-            android:layout_width="190dp"
+            android:layout_width="175dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_row="0"
             android:layout_column="0"
             android:layout_marginTop="20dp"
@@ -111,25 +138,32 @@
             android:onClick="clickValiderModifDepenseAnnexe"/>
 
         <Button
-            android:id="@+id/btn_supprimer_revenu"
-            android:layout_width="190dp"
+            android:id="@+id/btn_supprimer_depense_annexe"
+            android:layout_width="175dp"
             android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
             android:layout_row="0"
             android:layout_column="2"
             android:layout_marginTop="20dp"
             android:backgroundTint="#CB4335"
             android:text="@string/supprimer"
             android:onClick="clickSupprimerDepenseAnnexe"/>
-
     </GridLayout>
 
-    <Button
-        android:id="@+id/btn_retour_modif_revenu"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#273746"
-        android:text="@string/retour"
-        android:layout_below="@id/linearLayout"
-        android:onClick="clickRetourModifDepenseAnnexe"/>
+        android:layout_below="@+id/grid_modif_depense_annexe">
+
+        <Button
+            android:id="@+id/btn_retour_modif_depense_annexe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:backgroundTint="#273746"
+            android:onClick="clickRetourModifDepenseAnnexe"
+            android:text="@string/retour" />
+    </LinearLayout>
 
 </RelativeLayout>

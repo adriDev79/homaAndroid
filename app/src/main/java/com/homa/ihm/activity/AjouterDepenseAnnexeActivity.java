@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.homa.MainActivity;
@@ -58,10 +59,10 @@ public class AjouterDepenseAnnexeActivity extends AppCompatActivity {
         EditText etMontant = findViewById(R.id.et_montant_depense_annexe);
         float montant = etMontant.getText().toString().equals("") ? 0f : Float.parseFloat(etMontant.getText().toString());
 
-        EditText etDatePrelevement = findViewById(R.id.et_reception_depense_annexe);
+        TextView etDatePrelevement = findViewById(R.id.tv_date_prelevement_depense_annexe);
         String datePrelevement = etDatePrelevement.getText().toString().equals("")? HomaUtils.NON_RENSEIGNE : etDatePrelevement.getText().toString();
 
-        if (!(libelle.equals(HomaUtils.EMPTY ) && montant == 0f && idTypeDepense == 0)) {
+        if (!HomaUtils.EMPTY.equals(libelle) && montant != 0f) {
             Log.i(HomaUtils.TAG, HomaUtils.DEBUT + HomaUtils.ACTION + HomaUtils.ACTION_AJOUTER_DEPENSE_ANNEXE);
             Date date = new Date();
             String today = date.toString();
@@ -101,5 +102,9 @@ public class AjouterDepenseAnnexeActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    public void clickCalendarAjoutDepenseAnnexe(View view) {
+        HomaUtils.calendar(view.getContext(), findViewById(R.id.tv_date_prelevement_depense_annexe));
     }
 }

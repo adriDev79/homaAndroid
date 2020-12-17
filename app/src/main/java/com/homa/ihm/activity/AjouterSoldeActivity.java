@@ -40,7 +40,7 @@ public class AjouterSoldeActivity extends AppCompatActivity {
         EditText etMontant = findViewById(R.id.et_montant_solde);
         float montant = etMontant.getText().toString().equals("") ? 0f : Float.parseFloat(etMontant.getText().toString());
 
-        if (!(libelle.equals(HomaUtils.EMPTY ) && montant == 0f)) {
+        if (!HomaUtils.EMPTY.equals(libelle) && montant != 0f) {
             Log.i(HomaUtils.TAG, HomaUtils.DEBUT + HomaUtils.ACTION + HomaUtils.ACTION_AJOUTER_SOLDE);
 
             Solde solde = new Solde();

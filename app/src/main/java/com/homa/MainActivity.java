@@ -1,9 +1,11 @@
 package com.homa;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -39,7 +42,10 @@ import com.homa.ihm.adapter.ListSoldeAdapter;
 import com.homa.utils.HomaUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -79,6 +85,26 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    public void clickVisibilityListViewRevenu(View view){
+        AsyncTaskListRevenu asyncTaskListRevenu = new AsyncTaskListRevenu();
+        HomaUtils.visibilityListViewRevenu(findViewById(R.id.lv_revenu), findViewById(R.id.btn_visibility_revenu), asyncTaskListRevenu);
+    }
+
+    public void clickVisibilityListViewDepenseFixe(View view){
+        AsyncTaskListDepenseFixe asyncTaskListDepenseFixe = new AsyncTaskListDepenseFixe();
+        HomaUtils.visibilityListViewDepenseFixe(findViewById(R.id.lv_depense_fixe), findViewById(R.id.btn_visibility_depenseFixe), asyncTaskListDepenseFixe);
+    }
+
+    public void clickVisibilityListViewDepenseAnnexe(View view){
+        AsyncTaskListDepenseAnnexe asyncTaskListDepenseAnnexe = new AsyncTaskListDepenseAnnexe();
+        HomaUtils.visibilityListViewDepenseAnnexe(findViewById(R.id.lv_depense_annexe), findViewById(R.id.btn_visibility_depenseAnnexe), asyncTaskListDepenseAnnexe);
+    }
+
+    public void clickVisibilityListViewSolde(View view){
+        AsyncTaskListSolde asyncTaskListSolde = new AsyncTaskListSolde();
+        HomaUtils.visibilityListViewSolde(findViewById(R.id.lv_solde), findViewById(R.id.btn_visibility_solde), asyncTaskListSolde);
+    }
+
     public void clickAjouterRevenu(View view) {
         Intent intention = new Intent(this, AjouterRevenuActivity.class);
         startActivity(intention);
@@ -111,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<Revenu> revenus) {
             super.onPostExecute(revenus);
+            Intent intent = new Intent();
             ListRevenuAdapter listRevenuAdapter = new ListRevenuAdapter(MainActivity.this, R.layout.ligne_list_revenu, revenus);
             ListView listRevenu = findViewById(R.id.lv_revenu);
             listRevenu.setAdapter(listRevenuAdapter);
@@ -119,6 +146,12 @@ public class MainActivity extends AppCompatActivity {
             int sizeHeight = revenus.size() * 250;
             params.height = sizeHeight;
             listRevenu.setLayoutParams(params);
+            Log.i(HomaUtils.TAG, "taille list onpostexecute: " + revenus.size());
+            intent.putExtra("sizeListRevenu", revenus.size());
+            SharedPreferences preferences = getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.apply();
+            editor.putInt("sizeList", revenus.size());
 
             listRevenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

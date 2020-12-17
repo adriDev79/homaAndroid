@@ -2,11 +2,14 @@ package com.homa.ihm.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.homa.MainActivity;
@@ -17,7 +20,10 @@ import com.homa.dao.Connexion;
 import com.homa.utils.HomaToastUtils;
 import com.homa.utils.HomaUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class AjouterRevenuActivity extends AppCompatActivity {
 
@@ -39,10 +45,10 @@ public class AjouterRevenuActivity extends AppCompatActivity {
         EditText etMontant = findViewById(R.id.et_montant);
         float montant = etMontant.getText().toString().equals("") ? 0f : Float.parseFloat(etMontant.getText().toString());
 
-        EditText etDateReception = findViewById(R.id.et_reception);
+        TextView etDateReception = findViewById(R.id.tv_reception);
         String dateReception = etDateReception.getText().toString().equals("")? HomaUtils.NON_RENSEIGNE : etDateReception.getText().toString();
 
-        if (!(libelle.equals(HomaUtils.EMPTY ) && montant == 0f)) {
+        if (!HomaUtils.EMPTY.equals(libelle) && montant != 0f) {
             Log.i(HomaUtils.TAG, HomaUtils.DEBUT + HomaUtils.ACTION + HomaUtils.ACTION_AJOUTER_REVENU);
             Date date = new Date();
             String today = date.toString();
@@ -86,5 +92,10 @@ public class AjouterRevenuActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    public void clickCalendar(View view) {
+        TextView textView= findViewById(R.id.tv_reception);
+        HomaUtils.calendar(view.getContext(),textView);
     }
 }

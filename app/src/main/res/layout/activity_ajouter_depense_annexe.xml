@@ -30,7 +30,9 @@
       android:id="@+id/tv_label_select_depense_annexe"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_marginLeft="5dp"
       android:text="@string/type_de_d_pense"
+      android:textColor="#273746"
       android:textSize="15sp"
       android:textStyle="bold"
       android:layout_below="@id/tv_ajouter_une_depense_annexe"
@@ -40,13 +42,16 @@
       android:id="@+id/spinner_depense_annexe"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:layout_marginLeft="5dp"
       android:layout_below="@id/tv_label_select_depense_annexe"/>
 
   <TextView
       android:id="@+id/tv_label_libelle_depense_annexe"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_marginLeft="5dp"
       android:text="@string/libelle"
+      android:textColor="#273746"
       android:textSize="15sp"
       android:textStyle="bold"
       android:layout_below="@id/spinner_depense_annexe"
@@ -63,7 +68,9 @@
       android:id="@+id/tv_label_montant_depense_annexe"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_marginLeft="5dp"
       android:text="@string/montant"
+      android:textColor="#273746"
       android:textSize="15sp"
       android:textStyle="bold"
       android:layout_below="@id/et_libelle_depense_annexe"
@@ -80,36 +87,63 @@
       android:id="@+id/tv_label_reception_depense_annexe"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="@string/date_de_reception"
+      android:text="@string/date_de_prelevement"
+      android:textColor="#273746"
       android:textSize="15sp"
       android:textStyle="bold"
       android:layout_below="@id/et_montant_depense_annexe"
       android:layout_marginTop="20dp"/>
 
-  <EditText
-      android:id="@+id/et_reception_depense_annexe"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_below="@id/tv_label_reception_depense_annexe"
-      android:inputType="date"/>
-
   <Button
-      android:id="@+id/btn_valider_ajout_depense_annexe"
-      android:layout_width="match_parent"
+      android:id="@+id/btn_choisir_date_depense_annexe"
+      android:layout_width="175dp"
       android:layout_height="wrap_content"
-      android:backgroundTint="#CB4335"
-      android:text="@string/valider"
-      android:layout_below="@id/et_reception_depense_annexe"
       android:layout_marginTop="20dp"
-      android:onClick="ajouterDepenseAnnexe"/>
+      android:layout_marginLeft="5dp"
+      android:backgroundTint="#273746"
+      android:text="@string/choisir_une_date"
+      android:textSize="10sp"
+      android:layout_below="@id/tv_label_reception_depense_annexe"
+      android:onClick="clickCalendarAjoutDepenseAnnexe"
+      />
 
-  <Button
-      android:id="@+id/btn_retour_depense_annexe"
+  <TextView
+      android:id="@+id/tv_date_prelevement_depense_annexe"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:backgroundTint="#273746"
-      android:text="@string/retour"
-      android:layout_below="@id/btn_valider_ajout_depense_annexe"
-      android:onClick="clickRetourAjouterDepenseAnnexe"/>
+      android:layout_marginLeft="5dp"
+      android:textColor="#273746"
+      android:textSize="15sp"
+      android:textStyle="bold"
+      android:layout_below="@id/btn_choisir_date_depense_annexe"
+      />
 
+  <GridLayout
+      android:id="@+id/ll_btn_ajouter_revenu"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:layout_marginTop="20dp"
+      android:layout_below="@id/tv_date_prelevement_depense_annexe">
+
+    <Button
+        android:id="@+id/btn_valider_ajout_depense_annexe"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:backgroundTint="#CB4335"
+        android:text="@string/valider"
+        android:onClick="ajouterDepenseAnnexe"
+        />
+
+    <Button
+        android:id="@+id/btn_retour_depense_annexe"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="5dp"
+        android:backgroundTint="#273746"
+        android:text="@string/retour"
+        android:onClick="clickRetourAjouterDepenseAnnexe"/>
+  </GridLayout>
   </RelativeLayout>

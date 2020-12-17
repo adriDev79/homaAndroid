@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.homa.MainActivity;
@@ -43,14 +44,13 @@ public class ModifierDepenseFixeActivity extends AppCompatActivity {
         spinner.setAdapter(spinnerAdapter);
 
         Intent intent = getIntent();
-        int id = Integer.parseInt(intent.getStringExtra("idDepenseFixe"));
         EditText etLibelle = findViewById(R.id.et_libelle_modif_depense_fixe);
         etLibelle.setText(intent.getStringExtra("libelleDepenseFixe"));
 
         EditText etMontant = findViewById(R.id.et_montant_modif_depense_fixe);
         etMontant.setText(intent.getStringExtra("montantDepenseFixe"));
 
-        EditText etDatePrelevement = findViewById(R.id.et_reception_modif_depense_fixe);
+        TextView etDatePrelevement = findViewById(R.id.tv_modif_date_prelevement_depense_fixe);
         etDatePrelevement.setText(intent.getStringExtra("datePrelevement"));
 
         int idTypeDepense = (Integer) HomaUtils.MAP_TYPE_DEPENSE.get(intent.getStringExtra("typeDepenseFixe")) -1;
@@ -71,13 +71,13 @@ public class ModifierDepenseFixeActivity extends AppCompatActivity {
         EditText etMontant = findViewById(R.id.et_montant_modif_depense_fixe);
         float montant = etMontant.getText().toString().equals("") ? 0f : Float.parseFloat(etMontant.getText().toString());
 
-        EditText etDatePrelevement = findViewById(R.id.et_reception_modif_depense_fixe);
+        TextView etDatePrelevement = findViewById(R.id.tv_modif_date_prelevement_depense_fixe);
         String datePrelevement = etDatePrelevement.getText().toString().equals("")? HomaUtils.NON_RENSEIGNE : etDatePrelevement.getText().toString();
 
         Intent intent = getIntent();
         int id = Integer.parseInt(intent.getStringExtra("idDepenseFixe"));
 
-        if (!(libelle.equals(HomaUtils.EMPTY ) && montant == 0f && idTypeDepense == 0)) {
+        if (!HomaUtils.EMPTY.equals(libelle) && montant != 0f && idTypeDepense != 0) {
             Log.i(HomaUtils.TAG, HomaUtils.DEBUT + HomaUtils.ACTION + HomaUtils.ACTION_MODIFIER_DEPENSE_FIXE);
             Date date = new Date();
             String today = date.toString();
@@ -143,5 +143,9 @@ public class ModifierDepenseFixeActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    public void clickCalendarModifDepenseFixe(View view) {
+        HomaUtils.calendar(view.getContext(), findViewById(R.id.tv_modif_date_prelevement_depense_fixe));
     }
 }

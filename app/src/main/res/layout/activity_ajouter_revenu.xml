@@ -29,7 +29,9 @@
         android:id="@+id/tv_label_libelle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
         android:text="@string/libelle"
+        android:textColor="#273746"
         android:textSize="15sp"
         android:textStyle="bold"
         android:layout_below="@id/tv_ajouter_un_revenu"
@@ -46,7 +48,9 @@
         android:id="@+id/tv_label_montant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
         android:text="@string/montant"
+        android:textColor="#273746"
         android:textSize="15sp"
         android:textStyle="bold"
         android:layout_below="@id/et_libelle"
@@ -63,35 +67,64 @@
         android:id="@+id/tv_label_reception"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
         android:text="@string/date_de_reception"
+        android:textColor="#273746"
         android:textSize="15sp"
         android:textStyle="bold"
         android:layout_below="@id/et_montant"
         android:layout_marginTop="20dp"/>
 
-    <EditText
-        android:id="@+id/et_reception"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_label_reception"
-        android:inputType="date"/>
-
     <Button
-        android:id="@+id/btn_valider_ajout_revenu"
-        android:layout_width="match_parent"
+        android:id="@+id/btn_choisir_date"
+        android:layout_width="175dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="#CB4335"
-        android:text="@string/valider"
-        android:layout_below="@id/et_reception"
-        android:onClick="validerAjoutRevenu"
-        android:layout_marginTop="20dp"/>
-
-    <Button
-        android:id="@+id/btn_retour"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="5dp"
         android:backgroundTint="#273746"
-        android:text="@string/retour"
-        android:layout_below="@id/btn_valider_ajout_revenu"
-        android:onClick="clickRetourAjouterRevenu"/>
+        android:text="@string/choisir_une_date"
+        android:textSize="10sp"
+        android:layout_below="@id/tv_label_reception"
+        android:onClick="clickCalendar"
+        />
+
+    <TextView
+        android:id="@+id/tv_reception"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:textColor="#273746"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_below="@id/btn_choisir_date"
+        />
+
+    <GridLayout
+        android:id="@+id/ll_btn_ajouter_revenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/tv_reception">
+
+        <Button
+            android:id="@+id/btn_valider_ajout_revenu"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:backgroundTint="#CB4335"
+            android:text="@string/valider"
+            android:onClick="validerAjoutRevenu"
+            />
+
+        <Button
+            android:id="@+id/btn_retour"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="5dp"
+            android:backgroundTint="#273746"
+            android:text="@string/retour"
+            android:onClick="clickRetourAjouterRevenu"/>
+    </GridLayout>
 </RelativeLayout>
