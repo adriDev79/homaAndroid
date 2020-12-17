@@ -61,7 +61,7 @@
         android:textSize="12sp"
         android:textColor="#273746"
         android:textStyle="bold"
-        android:layout_marginLeft="95dp"
+        android:layout_marginLeft="100dp"
         android:layout_below="@id/ll_depense_annexe"/>
 
 </RelativeLayout>
