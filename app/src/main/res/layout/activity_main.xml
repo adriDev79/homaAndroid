@@ -1,100 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <RelativeLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <fragment
-            android:id="@+id/fragment_en_tete"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:name="com.homa.ihm.fragment.EnTeteFragment"
-            tools:ignore="MissingConstraints" />
+            android:layout_height="wrap_content">
 
-        <fragment
-            android:id="@+id/fragment_en_tete_revenu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:name="com.homa.ihm.fragment.EnTeteRevenuFragment"
-            android:layout_below="@id/fragment_en_tete"
-            tools:ignore="MissingConstraints" />
+            <fragment
+                android:id="@+id/fragment_en_tete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:name="com.homa.ihm.fragment.EnTeteFragment"
+                tools:ignore="MissingConstraints" />
 
-        <ListView
-            android:id="@+id/lv_revenu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/fragment_en_tete_revenu"
-            android:nestedScrollingEnabled="true">
-        </ListView>
+            <fragment
+                android:id="@+id/fragment_en_tete_revenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:name="com.homa.ihm.fragment.EnTeteRevenuFragment"
+                android:layout_below="@id/fragment_en_tete"
+                tools:ignore="MissingConstraints" />
+
+            <ListView
+                android:id="@+id/lv_revenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fragment_en_tete_revenu"
+                android:nestedScrollingEnabled="true">
+            </ListView>
 
 
-        <fragment
-            android:id="@+id/fragment_en_tete_depense_fixe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:name="com.homa.ihm.fragment.EnTeteDepenseFixeFragment"
-            android:layout_below="@id/lv_revenu"
-            android:layout_marginTop="20dp"/>
+            <fragment
+                android:id="@+id/fragment_en_tete_depense_fixe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:name="com.homa.ihm.fragment.EnTeteDepenseFixeFragment"
+                android:layout_below="@id/lv_revenu"
+                android:layout_marginTop="20dp"/>
 
-        <ListView
-            android:id="@+id/lv_depense_fixe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/fragment_en_tete_depense_fixe">
-        </ListView>
+            <ListView
+                android:id="@+id/lv_depense_fixe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fragment_en_tete_depense_fixe">
+            </ListView>
 
-        <fragment
-            android:id="@+id/fragment_en_tete_depense_annexe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:name="com.homa.ihm.fragment.EnTeteDepenseAnnexeFragment"
-            android:layout_below="@id/lv_depense_fixe"
-            android:layout_marginTop="20dp"/>
+            <fragment
+                android:id="@+id/fragment_en_tete_depense_annexe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:name="com.homa.ihm.fragment.EnTeteDepenseAnnexeFragment"
+                android:layout_below="@id/lv_depense_fixe"
+                android:layout_marginTop="20dp"/>
 
-        <ListView
-            android:id="@+id/lv_depense_annexe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/fragment_en_tete_depense_annexe">
-        </ListView>
+            <ListView
+                android:id="@+id/lv_depense_annexe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fragment_en_tete_depense_annexe">
+            </ListView>
 
-        <fragment
-            android:id="@+id/fragment_en_tete_solde"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:name="com.homa.ihm.fragment.EnTeteSoldeFragment"
-            android:layout_below="@id/lv_depense_annexe"
-            android:layout_marginTop="20dp"/>
+            <fragment
+                android:id="@+id/fragment_en_tete_solde"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:name="com.homa.ihm.fragment.EnTeteSoldeFragment"
+                android:layout_below="@id/lv_depense_annexe"
+                android:layout_marginTop="20dp"/>
 
-        <ListView
-            android:id="@+id/lv_solde"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/fragment_en_tete_solde">
-        </ListView>
+            <ListView
+                android:id="@+id/lv_solde"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fragment_en_tete_solde">
+            </ListView>
 
-        <fragment
-            android:id="@+id/fragment_en_tete_bilan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:name="com.homa.ihm.fragment.EnTeteBilanFragment"
-            android:layout_below="@id/lv_solde"
-            android:layout_marginTop="20dp"/>
+            <fragment
+                android:id="@+id/fragment_en_tete_bilan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:name="com.homa.ihm.fragment.EnTeteBilanFragment"
+                android:layout_below="@id/lv_solde"
+                android:layout_marginTop="20dp"/>
 
-        <ListView
-            android:id="@+id/lv_bilan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/fragment_en_tete_bilan"
-            android:layout_marginBottom="20dp">
-        </ListView>
+            <ListView
+                android:id="@+id/lv_bilan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fragment_en_tete_bilan"
+                android:layout_marginBottom="20dp">
+            </ListView>
 
-    </RelativeLayout>
+        </RelativeLayout>
 
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

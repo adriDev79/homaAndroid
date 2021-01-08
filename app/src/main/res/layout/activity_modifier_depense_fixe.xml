@@ -83,16 +83,24 @@
         android:inputType="numberDecimal"/>
 
     <TextView
-        android:id="@+id/tv_label_reception_modif_depense_fixe"
+        android:id="@+id/tv_label_payer__modif_depense_fixe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
-        android:text="@string/date_de_prelevement"
+        android:text="@string/paye"
         android:textColor="#273746"
         android:textSize="15sp"
         android:textStyle="bold"
-        android:layout_below="@id/et_montant_modif_depense_fixe"
+        android:layout_below="@+id/et_montant_modif_depense_fixe"
         android:layout_marginTop="20dp"/>
+
+    <CheckBox
+        android:id="@+id/cb_payer_modif_depense_fixe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/et_montant_modif_depense_fixe"/>
 
     <Button
         android:id="@+id/btn_modif_choisir_date_depense_fixe"
@@ -103,7 +111,7 @@
         android:backgroundTint="#273746"
         android:text="@string/choisir_une_date"
         android:textSize="10sp"
-        android:layout_below="@id/tv_label_reception_modif_depense_fixe"
+        android:layout_below="@+id/cb_payer_modif_depense_fixe"
         android:onClick="clickCalendarModifDepenseFixe"
         />
 

@@ -44,11 +44,24 @@ public class DepenseAnnexe {
      */
     @ColumnInfo(name = "date_de_modification")
     private String dateDeModification;
+
     /**
      * date de prélévement {@code Date}
      */
     @ColumnInfo(name = "date_de_prelevement")
     private String dateDePrelevement;
+
+    /**
+     * dépense payée {@code Date}
+     */
+    @ColumnInfo(name = "payer")
+    private boolean isPayer;
+
+    /**
+     * date fin prélévement{@code Date}
+     */
+    @ColumnInfo(name = "date_fin_prelevement")
+    private String dateFinPrelevement;
 
     public int getId() {
         return id;
@@ -104,6 +117,22 @@ public class DepenseAnnexe {
 
     public void setDateDePrelevement(String dateDePrelevement) {
         this.dateDePrelevement = dateDePrelevement;
+    }
+
+    public boolean isPayer() {
+        return isPayer;
+    }
+
+    public void setPayer(boolean payer) {
+        isPayer = payer;
+    }
+
+    public String getDateFinPrelevement() {
+        return dateFinPrelevement;
+    }
+
+    public void setDateFinPrelevement(String dateFinPrelevement) {
+        this.dateFinPrelevement = dateFinPrelevement;
     }
 
     @Override

@@ -51,6 +51,12 @@ public class DepenseFixe {
     @ColumnInfo(name = "date_de_prelevement")
     private String dateDePrelevement;
 
+    /**
+     * dépense payée {@code Date}
+     */
+    @ColumnInfo(name = "payer")
+    private boolean isPayer;
+
     public int getId() {
         return id;
     }
@@ -105,6 +111,14 @@ public class DepenseFixe {
 
     public void setDateDePrelevement(String dateDePrelevement) {
         this.dateDePrelevement = dateDePrelevement;
+    }
+
+    public boolean isPayer() {
+        return isPayer;
+    }
+
+    public void setPayer(boolean payer) {
+        isPayer = payer;
     }
 
     @Override

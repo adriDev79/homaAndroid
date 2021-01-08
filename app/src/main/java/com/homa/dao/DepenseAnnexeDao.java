@@ -23,6 +23,14 @@ public interface DepenseAnnexeDao {
     List<DepenseAnnexe> getAll();
 
     /**
+     * Récupere toute les dépenses annexes si elles sont payées
+     *
+     * @return {@code LinkedList<DepenseAnnexe>}
+     */
+    @Query("SELECT * FROM depenseannexe WHERE payer = :isPayed")
+    List<DepenseAnnexe> getAllIsPayed(boolean isPayed);
+
+    /**
      * Ajouter une dépense annexe
      *
      * @param depenseAnnexe .
@@ -36,8 +44,16 @@ public interface DepenseAnnexeDao {
      *
      * @return {@code DepenseAnnexe}
      */
-    @Query("UPDATE depenseannexe SET libelle = :libelle, montant = :montant, date_de_modification = :dateModif, date_de_prelevement = :datePrel, id_type_depense = :idTypeDepense WHERE id = :id")
-    void update(int id, String libelle, float montant, String dateModif, int idTypeDepense, String datePrel);
+    @Query("UPDATE depenseannexe " +
+            "SET libelle = :libelle," +
+            " montant = :montant," +
+            " date_de_modification = :dateModif," +
+            " date_de_prelevement = :datePrel," +
+            " id_type_depense = :idTypeDepense," +
+            " payer = :payer," +
+            " date_fin_prelevement = :finPrelevement" +
+            " WHERE id = :id")
+    void update(int id, String libelle, float montant, String dateModif, int idTypeDepense, String datePrel, boolean payer, String finPrelevement);
 
     /**
      * Supprimer une dépense annexe

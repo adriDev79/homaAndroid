@@ -20,9 +20,13 @@
     <string name="solde_compte_s_bancaire_s">Solde compte(s)</string>
     <string name="date_de_reception">Date de reception:</string>
     <string name="recu_le">Reçu le:</string>
-    <string name="pr_l_vement">Prélévement le:</string>
+    <string name="pr_l_vement">Prélévement:</string>
     <string name="ajouter">Ajouter</string>
     <string name="moins">-</string>
-    <string name="choisir_une_date">Choisir une date</string>
-    <string name="date_de_prelevement">Date de prélévement :</string>
+    <string name="choisir_une_date">Date de prélévement</string>
+    <string name="date_de_prelevement">Date de prélévement:</string>
+    <string name="paye">Payé:</string>
+    <string name="fin">Fin:</string>
+    <string name="fin_prelevement">Fin du prélévement:</string>
+    <string name="btnn_fin_prel">fin du prélévement</string>
 </resources>

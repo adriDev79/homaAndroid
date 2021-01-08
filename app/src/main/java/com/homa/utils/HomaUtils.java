@@ -23,7 +23,8 @@ import java.util.Objects;
 public class HomaUtils {
 
     public static final String EMPTY = "empty";
-    public static final String NON_RENSEIGNE = "Non renseigné";
+    public static final String NON_RENSEIGNE = "Pas de date";
+    public static final String AUCUNE = "Aucune";
     public static final int DELAY_LAUNCHER_PAGE = 4300;
     // LOG ACTIVITY
     public static final String TAG = "HOMALOG";

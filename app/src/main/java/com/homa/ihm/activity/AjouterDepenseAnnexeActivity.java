@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -62,6 +63,12 @@ public class AjouterDepenseAnnexeActivity extends AppCompatActivity {
         TextView etDatePrelevement = findViewById(R.id.tv_date_prelevement_depense_annexe);
         String datePrelevement = etDatePrelevement.getText().toString().equals("")? HomaUtils.NON_RENSEIGNE : etDatePrelevement.getText().toString();
 
+        TextView etFinPrelevement = findViewById(R.id.tv_date_fin_prelevement_depense_annexe);
+        String finPrelevement = etFinPrelevement.getText().toString().equals("")? HomaUtils.AUCUNE : etFinPrelevement.getText().toString();
+
+        CheckBox isPaye = findViewById(R.id.cb_payer_depense_annexe);
+        boolean check = isPaye.isChecked();
+
         if (!HomaUtils.EMPTY.equals(libelle) && montant != 0f) {
             Log.i(HomaUtils.TAG, HomaUtils.DEBUT + HomaUtils.ACTION + HomaUtils.ACTION_AJOUTER_DEPENSE_ANNEXE);
             Date date = new Date();
@@ -73,6 +80,8 @@ public class AjouterDepenseAnnexeActivity extends AppCompatActivity {
             depenseAnnexe.setDateDeCreation(today);
             depenseAnnexe.setDateDePrelevement(datePrelevement);
             depenseAnnexe.setIdTypeDepense(idTypeDepense);
+            depenseAnnexe.setPayer(check);
+            depenseAnnexe.setDateFinPrelevement(finPrelevement);
 
             try {
                 new Thread(() -> {
@@ -106,5 +115,9 @@ public class AjouterDepenseAnnexeActivity extends AppCompatActivity {
 
     public void clickCalendarAjoutDepenseAnnexe(View view) {
         HomaUtils.calendar(view.getContext(), findViewById(R.id.tv_date_prelevement_depense_annexe));
+    }
+
+    public void clickCalendarAjoutDateFinDepenseAnnexe(View view) {
+        HomaUtils.calendar(view.getContext(), findViewById(R.id.tv_date_fin_prelevement_depense_annexe));
     }
 }

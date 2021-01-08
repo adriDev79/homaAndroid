@@ -84,28 +84,37 @@
       android:inputType="numberDecimal"/>
 
   <TextView
-      android:id="@+id/tv_label_reception_depense_annexe"
+      android:id="@+id/tv_label_payer_depense_annexe"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="@string/date_de_prelevement"
+      android:layout_marginLeft="5dp"
+      android:text="@string/paye"
       android:textColor="#273746"
       android:textSize="15sp"
       android:textStyle="bold"
-      android:layout_below="@id/et_montant_depense_annexe"
+      android:layout_below="@+id/et_montant_depense_annexe"
       android:layout_marginTop="20dp"/>
+
+  <CheckBox
+      android:id="@+id/cb_payer_depense_annexe"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="50dp"
+      android:layout_marginTop="5dp"
+      android:layout_below="@+id/et_montant_depense_annexe"/>
 
   <Button
       android:id="@+id/btn_choisir_date_depense_annexe"
       android:layout_width="175dp"
       android:layout_height="wrap_content"
+      android:layout_below="@+id/tv_label_payer_depense_annexe"
+      android:layout_marginLeft="6dp"
       android:layout_marginTop="20dp"
-      android:layout_marginLeft="5dp"
+      android:layout_marginBottom="10dp"
       android:backgroundTint="#273746"
-      android:text="@string/choisir_une_date"
-      android:textSize="10sp"
-      android:layout_below="@id/tv_label_reception_depense_annexe"
       android:onClick="clickCalendarAjoutDepenseAnnexe"
-      />
+      android:text="@string/choisir_une_date"
+      android:textSize="10sp" />
 
   <TextView
       android:id="@+id/tv_date_prelevement_depense_annexe"
@@ -118,13 +127,37 @@
       android:layout_below="@id/btn_choisir_date_depense_annexe"
       />
 
+  <Button
+      android:id="@+id/btn_choisir_date_fin_depense_annexe"
+      android:layout_width="175dp"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/btn_choisir_date_depense_annexe"
+      android:layout_marginLeft="5dp"
+      android:layout_marginTop="23dp"
+      android:layout_marginBottom="10dp"
+      android:backgroundTint="#273746"
+      android:onClick="clickCalendarAjoutDateFinDepenseAnnexe"
+      android:text="@string/btnn_fin_prel"
+      android:textSize="10sp" />
+
+  <TextView
+      android:id="@+id/tv_date_fin_prelevement_depense_annexe"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="5dp"
+      android:textColor="#273746"
+      android:textSize="15sp"
+      android:textStyle="bold"
+      android:layout_below="@+id/btn_choisir_date_fin_depense_annexe"
+      />
+
   <GridLayout
       android:id="@+id/ll_btn_ajouter_revenu"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="horizontal"
       android:layout_marginTop="20dp"
-      android:layout_below="@id/tv_date_prelevement_depense_annexe">
+      android:layout_below="@+id/tv_date_fin_prelevement_depense_annexe">
 
     <Button
         android:id="@+id/btn_valider_ajout_depense_annexe"

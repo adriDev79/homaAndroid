@@ -54,14 +54,14 @@
         android:layout_below="@id/ll_depense_fixe"/>
 
     <TextView
-        android:id="@+id/tv_date_prelevement_depense_fixe"
+        android:id="@+id/tv_label_is_payer_depense_fixe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="xxxxx"
+        android:text="@string/paye"
         android:textSize="12sp"
         android:textColor="#273746"
         android:textStyle="bold"
-        android:layout_marginLeft="100dp"
+        android:layout_marginLeft="160dp"
         android:layout_below="@id/ll_depense_fixe"/>
 
 </RelativeLayout>

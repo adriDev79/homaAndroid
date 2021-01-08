@@ -34,7 +34,8 @@ public class ListDepenseFixeAdapter extends ArrayAdapter<DepenseFixe> {
         TextView tvTypeDepense = ligneView.findViewById(R.id.tv_type_depense_fixe);
         TextView libelle = ligneView.findViewById(R.id.tv_ligne_list_depense_fixe_libelle);
         TextView montant = ligneView.findViewById(R.id.tv_ligne_list_depense_fixe_montant);
-        TextView datePrelevement = ligneView.findViewById(R.id.tv_date_prelevement_depense_fixe);
+        TextView datePrelevement = ligneView.findViewById(R.id.tv_label_prelevement_depense_fixe);
+        TextView payer = ligneView.findViewById(R.id.tv_label_is_payer_depense_fixe);
 
         DepenseFixe depenseFixe = getItem(position);
 
@@ -44,10 +45,17 @@ public class ListDepenseFixeAdapter extends ArrayAdapter<DepenseFixe> {
                 typeDepense = item;
             }
         }
+
+        if (depenseFixe.isPayer()) {
+            payer.setText("Payé: oui");
+        }else {
+            payer.setText("Payé: non");
+        }
+
         tvTypeDepense.setText(typeDepense);
         libelle.setText(depenseFixe.getLibelle());
         montant.setText(String.valueOf(depenseFixe.getMontant()) + " €");
-        datePrelevement.setText(depenseFixe.getDateDePrelevement());
+        datePrelevement.setText("Prélévement: " + depenseFixe.getDateDePrelevement());
 
         return ligneView;
     }

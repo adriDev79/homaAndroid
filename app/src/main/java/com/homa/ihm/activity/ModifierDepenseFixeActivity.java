@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -53,6 +54,13 @@ public class ModifierDepenseFixeActivity extends AppCompatActivity {
         TextView etDatePrelevement = findViewById(R.id.tv_modif_date_prelevement_depense_fixe);
         etDatePrelevement.setText(intent.getStringExtra("datePrelevement"));
 
+        CheckBox isPayer = findViewById(R.id.cb_payer_modif_depense_fixe);
+        if ("true".equals(intent.getStringExtra("isPayerDepenseFixe"))) {
+            isPayer.setChecked(true);
+        } else {
+            isPayer.setChecked(false);
+        }
+
         int idTypeDepense = (Integer) HomaUtils.MAP_TYPE_DEPENSE.get(intent.getStringExtra("typeDepenseFixe")) -1;
         spinner.setSelection(idTypeDepense);
     }
@@ -77,6 +85,9 @@ public class ModifierDepenseFixeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int id = Integer.parseInt(intent.getStringExtra("idDepenseFixe"));
 
+        CheckBox isPayer = findViewById(R.id.cb_payer_modif_depense_fixe);
+        boolean check = isPayer.isChecked();
+
         if (!HomaUtils.EMPTY.equals(libelle) && montant != 0f && idTypeDepense != 0) {
             Log.i(HomaUtils.TAG, HomaUtils.DEBUT + HomaUtils.ACTION + HomaUtils.ACTION_MODIFIER_DEPENSE_FIXE);
             Date date = new Date();
@@ -86,7 +97,7 @@ public class ModifierDepenseFixeActivity extends AppCompatActivity {
                 int finalIdTypeDepense = idTypeDepense;
                 new Thread(() -> {
                     AppDataBase bdd = Connexion.getConnexion(ModifierDepenseFixeActivity.this);
-                    bdd.depenseFixeDao().update(id, libelle, montant, today, finalIdTypeDepense, datePrelevement);
+                    bdd.depenseFixeDao().update(id, libelle, montant, today, finalIdTypeDepense, datePrelevement, check);
                 }).start();
                 Toast.makeText(this, HomaToastUtils.DEPENSE_FIXE_MODIFIER, Toast.LENGTH_SHORT).show();
                 Log.i(HomaUtils.TAG, HomaUtils.FIN + HomaUtils.ACTION + HomaUtils.ACTION_MODIFIER_DEPENSE_FIXE + HomaUtils.RESULTAT + HomaUtils.SUCCESS);

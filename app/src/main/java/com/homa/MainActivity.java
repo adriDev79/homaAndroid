@@ -1,22 +1,19 @@
 package com.homa;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.homa.bo.DepenseAnnexe;
@@ -42,10 +39,7 @@ import com.homa.ihm.adapter.ListSoldeAdapter;
 import com.homa.utils.HomaUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -72,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
         AsyncTaskListBilan asyncTaskListBilan = new AsyncTaskListBilan();
         asyncTaskListBilan.execute();
-
     }
 
     @Override
@@ -203,11 +196,13 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("montantDepenseFixe", String.valueOf(depenseFixes.get(i).getMontant()));
                     intent.putExtra("datePrelevement", String.valueOf(depenseFixes.get(i).getDateDePrelevement()));
                     intent.putExtra("idDepenseFixe", String.valueOf(depenseFixes.get(i).getId()));
+                    intent.putExtra("isPayerDepenseFixe", String.valueOf(depenseFixes.get(i).isPayer()));
                     startActivity(intent);
                 }
             });
         }
     }
+
     public class AsyncTaskListDepenseAnnexe extends AsyncTask<Void, DepenseAnnexe, List<DepenseAnnexe>> {
 
         @Override
@@ -240,6 +235,8 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("datePrelevementDA", depenseAnnexes.get(i).getDateDePrelevement());
                     intent.putExtra("montantDepenseAnnexe", String.valueOf(depenseAnnexes.get(i).getMontant()));
                     intent.putExtra("idDepenseAnnexe", String.valueOf(depenseAnnexes.get(i).getId()));
+                    intent.putExtra("isPayer", String.valueOf(depenseAnnexes.get(i).isPayer()));
+                    intent.putExtra("finPrelevement", String.valueOf(depenseAnnexes.get(i).getDateFinPrelevement()));
                     startActivity(intent);
                 }
             });
@@ -283,6 +280,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected List<Total> doInBackground(Void... voids) {
+            boolean isPayed = true;
+
             List<Total> totaux = new ArrayList<>();
             final float[] montantTotalRevenu = {0f};
             final float[] montantTotalDepenseFixe = {0f};
@@ -294,11 +293,12 @@ public class MainActivity extends AppCompatActivity {
             bdd.revenuDao().getAll().forEach(i -> montantTotalRevenu[0] += i.getMontant());
             totaux.add(new Total("Total des revenus", montantTotalRevenu[0]));
 
-            bdd.depenseFixeDao().getAll().forEach(i -> montantTotalDepenseFixe[0] += i.getMontant());
+            bdd.depenseFixeDao().getAllIsPayed(isPayed).forEach(i -> montantTotalDepenseFixe[0] += i.getMontant());
             totaux.add(new Total("Total des dépenses fixes", montantTotalDepenseFixe[0]));
 
-            bdd.depenseAnnexeDao().getAll().forEach(i -> montantTotalDepenseAnnexe[0] += i.getMontant());
+            bdd.depenseAnnexeDao().getAllIsPayed(isPayed).forEach(i -> montantTotalDepenseAnnexe[0] += i.getMontant());
             totaux.add(new Total("Total des dépenses annexes", montantTotalDepenseAnnexe[0]));
+            Log.i(HomaUtils.TAG, "taille: " + bdd.depenseAnnexeDao().getAllIsPayed(isPayed).size());
 
             totaux.add(new Total("total des dépenses", montantTotalDepenseFixe[0] + montantTotalDepenseAnnexe[0]));
 

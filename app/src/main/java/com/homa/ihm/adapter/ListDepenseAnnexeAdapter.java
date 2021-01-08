@@ -37,7 +37,9 @@ public class ListDepenseAnnexeAdapter extends ArrayAdapter<DepenseAnnexe> {
         TextView tvTypeDepense = ligneView.findViewById(R.id.tv_type_depense_annexe);
         TextView libelle = ligneView.findViewById(R.id.tv_ligne_list_depense_annexe_libelle);
         TextView montant = ligneView.findViewById(R.id.tv_ligne_list_depense_annexe_montant);
-        TextView datePrelevement = ligneView.findViewById(R.id.tv_date_prelevement_depense_annexe);
+        TextView datePrelevement = ligneView.findViewById(R.id.tv_label_prelevement_depense_annexe);
+        TextView payer = ligneView.findViewById(R.id.tv_label_is_payer_depense_annexe);
+        TextView finPrelevement = ligneView.findViewById(R.id.tv_label_fin_depense_annexe);
 
         DepenseAnnexe depenseAnnexe = getItem(position);
 
@@ -47,13 +49,19 @@ public class ListDepenseAnnexeAdapter extends ArrayAdapter<DepenseAnnexe> {
                 typeDepense = item;
             }
         }
+
+        if (depenseAnnexe.isPayer()) {
+            payer.setText("Payé: oui");
+        }else {
+            payer.setText("Payé: non");
+        }
+
         tvTypeDepense.setText(typeDepense);
         libelle.setText(depenseAnnexe.getLibelle());
         montant.setText(depenseAnnexe.getMontant() + " €");
-        datePrelevement.setText(depenseAnnexe.getDateDePrelevement());
+        datePrelevement.setText("Prélévement: " + depenseAnnexe.getDateDePrelevement());
+        finPrelevement.setText("Date de fin: " +depenseAnnexe.getDateFinPrelevement());
 
         return ligneView;
     }
-
-
 }

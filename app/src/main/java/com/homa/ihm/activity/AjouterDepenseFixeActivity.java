@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -63,6 +64,9 @@ public class AjouterDepenseFixeActivity extends AppCompatActivity {
         TextView etDatePrelevement = findViewById(R.id.tv_date_prelevement_depense_fixe);
         String datePrelevement = etDatePrelevement.getText().toString().equals("")? HomaUtils.NON_RENSEIGNE : etDatePrelevement.getText().toString();
 
+        CheckBox isPayer = findViewById(R.id.cb_payer_depense_fixe);
+        boolean check = isPayer.isChecked();
+
         if (!HomaUtils.EMPTY.equals(libelle) && montant != 0f) {
             Log.i(HomaUtils.TAG, HomaUtils.DEBUT + HomaUtils.ACTION + HomaUtils.ACTION_AJOUTER_DEPENSE_FIXE);
             Date date = new Date();
@@ -74,6 +78,7 @@ public class AjouterDepenseFixeActivity extends AppCompatActivity {
             depenseFixe.setDateDeCreation(today);
             depenseFixe.setDateDePrelevement(datePrelevement);
             depenseFixe.setIdTypeDepense(idTypeDepense);
+            depenseFixe.setPayer(check);
 
             try {
                 new Thread(() -> {

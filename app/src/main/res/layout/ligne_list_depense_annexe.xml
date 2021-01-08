@@ -54,14 +54,26 @@
         android:layout_below="@id/ll_depense_annexe"/>
 
     <TextView
-        android:id="@+id/tv_date_prelevement_depense_annexe"
+        android:id="@+id/tv_label_fin_depense_annexe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="xxxxx"
+        android:text="@string/fin"
         android:textSize="12sp"
         android:textColor="#273746"
         android:textStyle="bold"
-        android:layout_marginLeft="100dp"
+        android:layout_marginLeft="160dp"
+        android:layout_below="@id/ll_depense_annexe"
+        />
+
+    <TextView
+        android:id="@+id/tv_label_is_payer_depense_annexe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/paye"
+        android:textSize="12sp"
+        android:textColor="#273746"
+        android:textStyle="bold"
+        android:layout_marginLeft="300dp"
         android:layout_below="@id/ll_depense_annexe"/>
 
 </RelativeLayout>

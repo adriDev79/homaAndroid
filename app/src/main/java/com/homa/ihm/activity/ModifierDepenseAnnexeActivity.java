@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -55,6 +56,16 @@ public class ModifierDepenseAnnexeActivity extends AppCompatActivity {
 
         TextView etDatePrelevement = findViewById(R.id.tv_modif_date_prelevement_depense_annexe);
         etDatePrelevement.setText(intent.getStringExtra("datePrelevementDA"));
+
+        TextView etFinPrelevement = findViewById(R.id.tv_modif_fin_date_prelevement_depense_annexe);
+        etFinPrelevement.setText(intent.getStringExtra("finPrelevement"));
+
+        CheckBox isPayer = findViewById(R.id.cb_payer_modif_depense_annexe);
+        if ("true".equals(intent.getStringExtra("isPayer"))) {
+            isPayer.setChecked(true);
+        } else {
+            isPayer.setChecked(false);
+        }
     }
 
     public void clickValiderModifDepenseAnnexe(View view) {
@@ -74,6 +85,12 @@ public class ModifierDepenseAnnexeActivity extends AppCompatActivity {
         TextView etDatePrelevement = findViewById(R.id.tv_modif_date_prelevement_depense_annexe);
         String datePrelevement = etDatePrelevement.getText().toString().equals("")? HomaUtils.NON_RENSEIGNE : etDatePrelevement.getText().toString();
 
+        TextView etFinPrelevement = findViewById(R.id.tv_modif_fin_date_prelevement_depense_annexe);
+        String dateFinPrelevement = etFinPrelevement.getText().toString().equals("")? HomaUtils.AUCUNE : etFinPrelevement.getText().toString();
+
+        CheckBox isPayer = findViewById(R.id.cb_payer_modif_depense_annexe);
+        boolean check = isPayer.isChecked();
+
         Intent intent = getIntent();
         int id = Integer.parseInt(intent.getStringExtra("idDepenseAnnexe"));
 
@@ -86,7 +103,7 @@ public class ModifierDepenseAnnexeActivity extends AppCompatActivity {
                 int finalIdTypeDepense = idTypeDepense;
                 new Thread(() -> {
                     AppDataBase bdd = Connexion.getConnexion(ModifierDepenseAnnexeActivity.this);
-                    bdd.depenseAnnexeDao().update(id, libelle, montant, today, finalIdTypeDepense, datePrelevement);
+                    bdd.depenseAnnexeDao().update(id, libelle, montant, today, finalIdTypeDepense, datePrelevement, check, dateFinPrelevement);
                 }).start();
                 Toast.makeText(this, HomaToastUtils.DEPENSE_ANNEXE_MODIFIER, Toast.LENGTH_SHORT).show();
                 Log.i(HomaUtils.TAG, HomaUtils.FIN + HomaUtils.ACTION + HomaUtils.ACTION_MODIFIER_DEPENSE_ANNEXE + HomaUtils.RESULTAT + HomaUtils.SUCCESS);
@@ -147,5 +164,9 @@ public class ModifierDepenseAnnexeActivity extends AppCompatActivity {
 
     public void clickCalendarModifDepenseAnnexe(View view) {
         HomaUtils.calendar(view.getContext(), findViewById(R.id.tv_modif_date_prelevement_depense_annexe));
+    }
+
+    public void clickCalendarModifFinPrelevementDepenseAnnexe(View view) {
+        HomaUtils.calendar(view.getContext(), findViewById(R.id.tv_modif_fin_date_prelevement_depense_annexe));
     }
 }
