@@ -16,13 +16,13 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <Button
-        android:layout_width="90dp"
+    <ImageButton
+        android:layout_width="70dp"
         android:layout_height="match_parent"
         android:layout_gravity="right|center"
         android:layout_marginRight="80dp"
-        android:backgroundTint="#CB4335"
-        android:text="@string/ajouter"
+        android:backgroundTint="#E74C3C"
+        android:src="@drawable/ic_baseline_add_box_24"
         android:textSize="10sp"
         android:textColor="@color/white"
         android:textStyle="bold"
@@ -34,9 +34,9 @@
         android:layout_width="70dp"
         android:layout_height="match_parent"
         android:layout_gravity="right|center"
-        android:backgroundTint="#CB4335"
-        android:text="@string/moins"
+        android:backgroundTint="#E74C3C"
         android:textSize="20sp"
+        android:text="-"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:layout_marginRight="5dp"

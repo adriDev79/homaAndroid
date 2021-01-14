@@ -2,7 +2,7 @@
     <string name="app_name">homa</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="en_tete_name_revenu">Revenu(s)</string>
+    <string name="en_tete_name_revenu">Revenus</string>
     <string name="add">+</string>
     <string name="ajouter_un_revenu">Ajouter un revenu</string>
     <string name="libelle">Libelle :</string>
@@ -17,7 +17,7 @@
     <string name="modifier_d_pense_annexe">Modifier dépense annexe</string>
     <string name="ajouter_un_solde">Ajouter un solde</string>
     <string name="bilan">Bilan</string>
-    <string name="solde_compte_s_bancaire_s">Solde compte(s)</string>
+    <string name="solde_compte_s_bancaire_s">Solde comptes</string>
     <string name="date_de_reception">Date de reception:</string>
     <string name="recu_le">Reçu le:</string>
     <string name="pr_l_vement">Prélévement:</string>

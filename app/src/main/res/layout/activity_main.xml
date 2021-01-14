@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:name="com.homa.ihm.fragment.EnTeteDepenseFixeFragment"
                 android:layout_below="@id/lv_revenu"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="5dp"/>
 
             <ListView
                 android:id="@+id/lv_depense_fixe"
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:name="com.homa.ihm.fragment.EnTeteDepenseAnnexeFragment"
                 android:layout_below="@id/lv_depense_fixe"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="5dp"/>
 
             <ListView
                 android:id="@+id/lv_depense_annexe"
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:name="com.homa.ihm.fragment.EnTeteSoldeFragment"
                 android:layout_below="@id/lv_depense_annexe"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="5dp"/>
 
             <ListView
                 android:id="@+id/lv_solde"
@@ -89,14 +89,14 @@
                 android:layout_height="wrap_content"
                 android:name="com.homa.ihm.fragment.EnTeteBilanFragment"
                 android:layout_below="@id/lv_solde"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="5dp"/>
 
             <ListView
                 android:id="@+id/lv_bilan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/fragment_en_tete_bilan"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="5dp">
             </ListView>
 
         </RelativeLayout>

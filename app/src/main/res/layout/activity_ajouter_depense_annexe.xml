@@ -61,6 +61,7 @@
       android:id="@+id/et_libelle_depense_annexe"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:singleLine="true"
       android:layout_below="@id/tv_label_libelle_depense_annexe"
       android:maxLength="30"/>
 
