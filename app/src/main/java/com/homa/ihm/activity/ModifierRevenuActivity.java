@@ -33,7 +33,6 @@ public class ModifierRevenuActivity extends AppCompatActivity {
         super.onResume();
 
         Intent intent = getIntent();
-        int id = Integer.parseInt(intent.getStringExtra("id"));
 
         EditText etLibelle = findViewById(R.id.et_libelle_modif_revenu);
         etLibelle.setText(intent.getStringExtra("libelle"));

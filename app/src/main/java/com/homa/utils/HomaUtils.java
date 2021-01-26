@@ -13,9 +13,16 @@ import android.widget.TextView;
 
 import com.homa.MainActivity;
 import com.homa.R;
+import com.homa.bll.asyncTask.AsyncTaskDepenseAnnexe;
+import com.homa.bll.asyncTask.AsyncTaskDepenseFixe;
+import com.homa.bll.asyncTask.AsyncTaskRevenu;
+import com.homa.bll.asyncTask.AsyncTaskSolde;
+import com.homa.bo.Revenu;
 
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -92,7 +99,10 @@ public class HomaUtils {
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 String myFormat = "dd/MM/yyyy"; //In which you need put here
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
-                textView.setText(sdf.format(myCalendar.getTime()));
+                if (textView != null) {
+                    textView.setText(sdf.format(myCalendar.getTime()));
+                }
+
             }
         };
         new DatePickerDialog(context, date, myCalendar
@@ -100,7 +110,7 @@ public class HomaUtils {
                 myCalendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
-    public static void visibilityListViewRevenu(ListView listView, Button button, MainActivity.AsyncTaskListRevenu asyncTask) {
+    public static void visibilityListViewRevenu(ListView listView, Button button, AsyncTaskRevenu asyncTask) {
         if (listView.getVisibility() == View.VISIBLE) {
             button.setText(R.string.add);
             listView.setVisibility(View.INVISIBLE);
@@ -114,7 +124,7 @@ public class HomaUtils {
         }
     }
 
-    public static void visibilityListViewDepenseFixe(ListView listView, Button button, MainActivity.AsyncTaskListDepenseFixe asyncTask) {
+    public static void visibilityListViewDepenseFixe(ListView listView, Button button, AsyncTaskDepenseFixe asyncTask) {
         if (listView.getVisibility() == View.VISIBLE) {
             button.setText(R.string.add);
             listView.setVisibility(View.INVISIBLE);
@@ -128,7 +138,7 @@ public class HomaUtils {
         }
     }
 
-    public static void visibilityListViewDepenseAnnexe(ListView listView, Button button, MainActivity.AsyncTaskListDepenseAnnexe asyncTask) {
+    public static void visibilityListViewDepenseAnnexe(ListView listView, Button button, AsyncTaskDepenseAnnexe asyncTask) {
         if (listView.getVisibility() == View.VISIBLE) {
             button.setText(R.string.add);
             listView.setVisibility(View.INVISIBLE);
@@ -142,7 +152,7 @@ public class HomaUtils {
         }
     }
 
-    public static void visibilityListViewSolde(ListView listView, Button button, MainActivity.AsyncTaskListSolde asyncTask) {
+    public static void visibilityListViewSolde(ListView listView, Button button, AsyncTaskSolde asyncTask) {
         if (listView.getVisibility() == View.VISIBLE) {
             button.setText(R.string.add);
             listView.setVisibility(View.INVISIBLE);

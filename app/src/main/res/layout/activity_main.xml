@@ -21,12 +21,41 @@
                 android:name="com.homa.ihm.fragment.EnTeteFragment"
                 tools:ignore="MissingConstraints" />
 
+            <LinearLayout
+                android:id="@+id/ll_date_compte"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fragment_en_tete">
+
+                <TextView
+                    android:id="@+id/tv_date_compte"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#273746"
+                    android:text=""
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="5dp"/>
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:backgroundTint="@color/white"
+                    android:src="@drawable/ic_baseline_calendar_today_24"
+                    android:onClick="clickCalendarDateCompte"
+                    />
+
+
+            </LinearLayout>
+
             <fragment
                 android:id="@+id/fragment_en_tete_revenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:name="com.homa.ihm.fragment.EnTeteRevenuFragment"
-                android:layout_below="@id/fragment_en_tete"
+                android:layout_below="@+id/ll_date_compte"
                 tools:ignore="MissingConstraints" />
 
             <ListView
