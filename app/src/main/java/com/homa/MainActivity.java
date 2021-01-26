@@ -1,59 +1,33 @@
 package com.homa;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.homa.bll.asyncTask.AsyncTaskBilan;
 import com.homa.bll.asyncTask.AsyncTaskDepenseAnnexe;
 import com.homa.bll.asyncTask.AsyncTaskDepenseFixe;
 import com.homa.bll.asyncTask.AsyncTaskRevenu;
 import com.homa.bll.asyncTask.AsyncTaskSolde;
-import com.homa.bo.DepenseAnnexe;
-import com.homa.bo.DepenseFixe;
-import com.homa.bo.Revenu;
-import com.homa.bo.Solde;
-import com.homa.bo.Total;
-import com.homa.dao.AppDataBase;
-import com.homa.dao.Connexion;
+
 import com.homa.ihm.activity.AjouterDepenseAnnexeActivity;
 import com.homa.ihm.activity.AjouterDepenseFixeActivity;
 import com.homa.ihm.activity.AjouterRevenuActivity;
 import com.homa.ihm.activity.AjouterSoldeActivity;
-import com.homa.ihm.activity.ModifierDepenseAnnexeActivity;
-import com.homa.ihm.activity.ModifierDepenseFixeActivity;
-import com.homa.ihm.activity.ModifierRevenuActivity;
-import com.homa.ihm.activity.ModifierSoldeActivity;
-import com.homa.ihm.adapter.ListBilanAdapter;
-import com.homa.ihm.adapter.ListDepenseAnnexeAdapter;
-import com.homa.ihm.adapter.ListDepenseFixeAdapter;
-import com.homa.ihm.adapter.ListRevenuAdapter;
-import com.homa.ihm.adapter.ListSoldeAdapter;
+
 import com.homa.utils.HomaDisplayUtils;
 import com.homa.utils.HomaUtils;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
