@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import com.homa.R;
 import com.homa.bo.Total;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class ListBilanAdapter extends ArrayAdapter<Total> {
@@ -40,6 +41,12 @@ public class ListBilanAdapter extends ArrayAdapter<Total> {
             montant.setTextColor(Color.parseColor("#CB4335"));
         } else {
             montant.setTextColor(Color.parseColor("#27AE60"));
+        }
+
+        for (String lib : Arrays.asList("Total des dépenses fixes", "Total des dépenses annexes", "Total des dépenses")) {
+            if (lib.equals(Total.getLibelle())) {
+                montant.setTextColor(Color.parseColor("#CB4335"));
+            }
         }
 
         libelle.setText(Total.getLibelle());

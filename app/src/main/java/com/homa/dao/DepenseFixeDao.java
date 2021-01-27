@@ -16,12 +16,20 @@ import java.util.List;
 public interface DepenseFixeDao {
 
     /**
-     * Récupere toute les dépenses fixes
+     * Récupère toute les dépenses fixes
      *
      * @return {@code LinkedList<DepenseFixe>}
      */
     @Query("SELECT * FROM depensefixe")
     List<DepenseFixe> getAll();
+
+    /**
+     * Récupère toute les dépenses fixes en fonction de la date choisis
+     *
+     * @return {@code LinkedList<DepenseFixe>}
+     */
+    @Query("SELECT * FROM depensefixe WHERE date_de_creation = :date")
+    List<DepenseFixe> getAllWhereDate(String date);
 
     /**
      * Récupere toute les dépenses fixe si elles sont payées
@@ -30,6 +38,14 @@ public interface DepenseFixeDao {
      */
     @Query("SELECT * FROM depensefixe WHERE payer = :isPayed")
     List<DepenseFixe> getAllIsPayed(boolean isPayed);
+
+    /**
+     * Récupère toute les dépenses fixes en fonction de la date choisis
+     *
+     * @return {@code LinkedList<DepenseFixe>}
+     */
+    @Query("SELECT * FROM depensefixe WHERE date_de_creation = :date AND payer = :isPayed")
+    List<DepenseFixe> getAllWhereDateAndIsPayed(boolean isPayed, String date);
 
     /**
      * Ajouter une dépense fixe

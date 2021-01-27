@@ -24,11 +24,8 @@ import com.homa.ihm.activity.AjouterSoldeActivity;
 import com.homa.utils.HomaDisplayUtils;
 import com.homa.utils.HomaUtils;
 
-import java.text.SimpleDateFormat;
-
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,24 +40,31 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         Context ctx = MainActivity.this;
         Date date = new Date();
+        String dateAccount = null;
+
+        Intent intent = getIntent();
+        if (intent.getStringExtra("dateAccount") == null) {
+            dateAccount = HomaUtils.dateFormat("MMMM yyyy", date);
+        } else {
+            dateAccount = intent.getStringExtra("dateAccount");
+        }
+
         TextView tvDateCompte = findViewById(R.id.tv_date_compte);
-        SimpleDateFormat sdf = new SimpleDateFormat("MMMM yyyy", Locale.FRANCE);
-        tvDateCompte.setText(sdf.format(date));
+        tvDateCompte.setText(dateAccount);
 
-
-        AsyncTaskRevenu asyncTaskRevenu = new AsyncTaskRevenu(ctx, findViewById(R.id.lv_revenu), date);
+        AsyncTaskRevenu asyncTaskRevenu = new AsyncTaskRevenu(ctx, findViewById(R.id.lv_revenu), dateAccount);
         asyncTaskRevenu.execute();
 
-        AsyncTaskDepenseFixe asyncTaskDepenseFixe = new AsyncTaskDepenseFixe(ctx, findViewById(R.id.lv_depense_fixe));
+        AsyncTaskDepenseFixe asyncTaskDepenseFixe = new AsyncTaskDepenseFixe(ctx, findViewById(R.id.lv_depense_fixe), dateAccount);
         asyncTaskDepenseFixe.execute();
 
-        AsyncTaskDepenseAnnexe asyncTaskDepenseAnnexe = new AsyncTaskDepenseAnnexe(ctx, findViewById(R.id.lv_depense_annexe));
+        AsyncTaskDepenseAnnexe asyncTaskDepenseAnnexe = new AsyncTaskDepenseAnnexe(ctx, findViewById(R.id.lv_depense_annexe), dateAccount);
         asyncTaskDepenseAnnexe.execute();
 
-        AsyncTaskSolde asyncTaskSolde = new AsyncTaskSolde(ctx, findViewById(R.id.lv_solde));
+        AsyncTaskSolde asyncTaskSolde = new AsyncTaskSolde(ctx, findViewById(R.id.lv_solde), dateAccount);
         asyncTaskSolde.execute();
 
-        AsyncTaskBilan asyncTaskBilan = new AsyncTaskBilan(ctx, findViewById(R.id.lv_bilan));
+        AsyncTaskBilan asyncTaskBilan = new AsyncTaskBilan(ctx, findViewById(R.id.lv_bilan), dateAccount);
         asyncTaskBilan.execute();
     }
 
@@ -78,21 +82,24 @@ public class MainActivity extends AppCompatActivity {
         Context ctx = MainActivity.this;
         int idView = view.getId();
 
+        TextView tvDateCompte = findViewById(R.id.tv_date_compte);
+        String dateCompte = tvDateCompte.getText().toString();
+
         switch (idView) {
             case HomaDisplayUtils.ID_VIEW_REVENU :
-                AsyncTaskRevenu asyncTaskRevenu = new AsyncTaskRevenu(ctx, findViewById(R.id.lv_revenu));
+                AsyncTaskRevenu asyncTaskRevenu = new AsyncTaskRevenu(ctx, findViewById(R.id.lv_revenu), dateCompte);
                 HomaUtils.visibilityListViewRevenu(findViewById(R.id.lv_revenu), findViewById(R.id.btn_visibility_revenu), asyncTaskRevenu);
                 break;
             case HomaDisplayUtils.ID_VIEW_DEPENSE_FIXE :
-                AsyncTaskDepenseFixe asyncTaskDepenseFixe = new AsyncTaskDepenseFixe(ctx, findViewById(R.id.lv_depense_fixe));
+                AsyncTaskDepenseFixe asyncTaskDepenseFixe = new AsyncTaskDepenseFixe(ctx, findViewById(R.id.lv_depense_fixe), dateCompte);
                 HomaUtils.visibilityListViewDepenseFixe(findViewById(R.id.lv_depense_fixe), findViewById(R.id.btn_visibility_depenseFixe), asyncTaskDepenseFixe);
                 break;
             case HomaDisplayUtils.ID_VIEW_DEPENSE_ANNEXE :
-                AsyncTaskDepenseAnnexe asyncTaskDepenseAnnexe = new AsyncTaskDepenseAnnexe(ctx, findViewById(R.id.lv_depense_annexe));
+                AsyncTaskDepenseAnnexe asyncTaskDepenseAnnexe = new AsyncTaskDepenseAnnexe(ctx, findViewById(R.id.lv_depense_annexe), dateCompte);
                 HomaUtils.visibilityListViewDepenseAnnexe(findViewById(R.id.lv_depense_annexe), findViewById(R.id.btn_visibility_depenseAnnexe), asyncTaskDepenseAnnexe);
                 break;
             case HomaDisplayUtils.ID_VIEW_SOLDE :
-                AsyncTaskSolde asyncTaskSolde = new AsyncTaskSolde(ctx, findViewById(R.id.lv_solde));
+                AsyncTaskSolde asyncTaskSolde = new AsyncTaskSolde(ctx, findViewById(R.id.lv_solde), dateCompte);
                 HomaUtils.visibilityListViewSolde(findViewById(R.id.lv_solde), findViewById(R.id.btn_visibility_solde), asyncTaskSolde);
                 break;
             default: Exception exception;
@@ -101,21 +108,25 @@ public class MainActivity extends AppCompatActivity {
 
     public void clickAjouterRevenu(View view) {
         Intent intention = new Intent(this, AjouterRevenuActivity.class);
+        intentDate(intention);
         startActivity(intention);
     }
 
     public void clickAjouterDepenseFixe(View view) {
         Intent intention = new Intent(this, AjouterDepenseFixeActivity.class);
+        intentDate(intention);
         startActivity(intention);
     }
 
     public void clickAjouterDepenseAnnexe(View view) {
         Intent intention = new Intent(this, AjouterDepenseAnnexeActivity.class);
+        intentDate(intention);
         startActivity(intention);
     }
 
     public void clickAjouterSolde(View view) {
         Intent intention = new Intent(this, AjouterSoldeActivity.class);
+        intentDate(intention);
         startActivity(intention);
     }
 
@@ -128,14 +139,28 @@ public class MainActivity extends AppCompatActivity {
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                SimpleDateFormat sdf = new SimpleDateFormat("MMMM yyyy", Locale.FRANCE);
                 TextView tvDateCompte = findViewById(R.id.tv_date_compte);
-                tvDateCompte.setText(sdf.format(myCalendar.getTime()));
+                tvDateCompte.setText(HomaUtils.dateFormat("MMMM yyyy", myCalendar.getTime()));
 
-                Date dateAccount = myCalendar.getTime();
+                String dateAccount = HomaUtils.dateFormat("MMMM yyyy", myCalendar.getTime());
+
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                intent.putExtra("dateChoisis", dateAccount);
 
                 AsyncTaskRevenu asyncTaskRevenu = new AsyncTaskRevenu(MainActivity.this, findViewById(R.id.lv_revenu), dateAccount);
                 asyncTaskRevenu.execute();
+
+                AsyncTaskDepenseFixe asyncTaskDepenseFixe = new AsyncTaskDepenseFixe(MainActivity.this, findViewById(R.id.lv_depense_fixe), dateAccount);
+                asyncTaskDepenseFixe.execute();
+
+                AsyncTaskDepenseAnnexe asyncTaskDepenseAnnexe = new AsyncTaskDepenseAnnexe(MainActivity.this, findViewById(R.id.lv_depense_annexe), dateAccount);
+                asyncTaskDepenseAnnexe.execute();
+
+                AsyncTaskSolde asyncTaskSolde = new AsyncTaskSolde(MainActivity.this, findViewById(R.id.lv_solde), dateAccount);
+                asyncTaskSolde.execute();
+
+                AsyncTaskBilan asyncTaskBilan = new AsyncTaskBilan(MainActivity.this, findViewById(R.id.lv_bilan), dateAccount);
+                asyncTaskBilan.execute();
             }
         };
         new DatePickerDialog(
@@ -144,5 +169,11 @@ public class MainActivity extends AppCompatActivity {
                 myCalendar.get(Calendar.YEAR),
                 myCalendar.get(Calendar.MONTH),
                 myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    public void intentDate(Intent intent) {
+        TextView textView = findViewById(R.id.tv_date_compte);
+        String date = textView.getText().toString();
+        intent.putExtra("dateAccount", date);
     }
 }

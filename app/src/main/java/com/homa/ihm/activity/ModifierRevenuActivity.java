@@ -70,6 +70,7 @@ public class ModifierRevenuActivity extends AppCompatActivity {
                 Toast.makeText(this, HomaToastUtils.REVENU_MODIFIER, Toast.LENGTH_SHORT).show();
                 Log.i(HomaUtils.TAG, HomaUtils.FIN + HomaUtils.ACTION + HomaUtils.ACTION_MODIFIER_REVENU + HomaUtils.RESULTAT + HomaUtils.SUCCESS);
                 Intent intention = new Intent(this, MainActivity.class);
+                intention.putExtra("dateAccount", intent.getStringExtra("dateAccount"));
                 startActivity(intention);
             } catch (Exception e) {
                 Toast.makeText(this, HomaToastUtils.ECHEC_REVENU_MODIFIER, Toast.LENGTH_SHORT).show();
@@ -97,6 +98,7 @@ public class ModifierRevenuActivity extends AppCompatActivity {
                 Toast.makeText(this, HomaToastUtils.REVENU_SUPPRIMER, Toast.LENGTH_SHORT).show();
                 Log.i(HomaUtils.TAG, HomaUtils.FIN + HomaUtils.ACTION + HomaUtils.ACTION_SUPPRIMER_REVENU + HomaUtils.RESULTAT + HomaUtils.SUCCESS);
                 Intent intention = new Intent(this, MainActivity.class);
+                intention.putExtra("dateAccount", intent.getStringExtra("dateAccount"));
                 startActivity(intention);
             } catch (Exception e) {
                 Toast.makeText(this, HomaToastUtils.ECHEC_REVENU_SUPPRIMER, Toast.LENGTH_SHORT).show();
@@ -110,7 +112,10 @@ public class ModifierRevenuActivity extends AppCompatActivity {
     }
 
     public void clickRetourModifRevenu(View view) {
+        Intent intent = getIntent();
+
         Intent intention = new Intent(this,MainActivity.class);
+        intention.putExtra("dateAccount", intent.getStringExtra("dateAccount"));
         startActivity(intention);
     }
 

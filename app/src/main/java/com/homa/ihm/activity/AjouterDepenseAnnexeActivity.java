@@ -71,13 +71,13 @@ public class AjouterDepenseAnnexeActivity extends AppCompatActivity {
 
         if (!HomaUtils.EMPTY.equals(libelle) && montant != 0f) {
             Log.i(HomaUtils.TAG, HomaUtils.DEBUT + HomaUtils.ACTION + HomaUtils.ACTION_AJOUTER_DEPENSE_ANNEXE);
-            Date date = new Date();
-            String today = date.toString();
+            Intent intent = getIntent();
+            String dateCreation = intent.getStringExtra("dateAccount").toString();
 
             DepenseAnnexe depenseAnnexe = new DepenseAnnexe();
             depenseAnnexe.setLibelle(libelle);
             depenseAnnexe.setMontant(montant);
-            depenseAnnexe.setDateDeCreation(today);
+            depenseAnnexe.setDateDeCreation(dateCreation);
             depenseAnnexe.setDateDePrelevement(datePrelevement);
             depenseAnnexe.setIdTypeDepense(idTypeDepense);
             depenseAnnexe.setPayer(check);
@@ -91,6 +91,7 @@ public class AjouterDepenseAnnexeActivity extends AppCompatActivity {
                 Toast.makeText(this, HomaToastUtils.DEPENSE_ANNEXE_AJOUTER, Toast.LENGTH_SHORT).show();
                 Log.i(HomaUtils.TAG, HomaUtils.FIN + HomaUtils.ACTION + HomaUtils.ACTION_AJOUTER_DEPENSE_ANNEXE + HomaUtils.RESULTAT + HomaUtils.SUCCESS);
                 Intent intention = new Intent(this, MainActivity.class);
+                intention.putExtra("dateAccount", depenseAnnexe.getDateDeCreation());
                 startActivity(intention);
             } catch (Exception e) {
                 Toast.makeText(this, HomaToastUtils.ECHEC_DEPENSE_ANNEXE_AJOUTER, Toast.LENGTH_SHORT).show();
@@ -104,7 +105,10 @@ public class AjouterDepenseAnnexeActivity extends AppCompatActivity {
     }
 
     public void clickRetourAjouterDepenseAnnexe(View view) {
+        Intent intent = getIntent();
+
         Intent intention = new Intent(this, MainActivity.class);
+        intention.putExtra("dateAccount", intent.getStringExtra("dateAccount").toString());
         startActivity(intention);
     }
 

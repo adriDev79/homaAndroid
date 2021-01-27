@@ -1,5 +1,6 @@
 package com.homa.bll.asyncTask;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -15,44 +16,72 @@ import com.homa.dao.Connexion;
 import com.homa.ihm.activity.ModifierSoldeActivity;
 import com.homa.ihm.adapter.ListSoldeAdapter;
 
-import java.util.Date;
 import java.util.List;
 
+/**
+ * Classe qui gére la liste des soldes.
+ */
+@SuppressLint("StaticFieldLeak")
 public class AsyncTaskSolde extends AsyncTask<Void, Solde, List<Solde>>  {
 
-    private Context ctx;
-    private ListView listView;
-    private Date date;
+    /**
+     * Context de l'activité {@code Context}
+     */
+    private final Context ctx;
 
-    public AsyncTaskSolde() {
-    }
+    /**
+     * ListView des soldes {@code ListView}
+     */
+    private final ListView listView;
 
+    /**
+     * Date des comptes en cours {@code Date}
+     */
+
+    private String dateAccount;
+
+    /**
+     * Constructeur
+     */
     public AsyncTaskSolde(Context ctx, ListView listView) {
         this.ctx = ctx;
         this.listView = listView;
     }
 
-    public AsyncTaskSolde(Context ctx, ListView listView, Date date) {
+    /**
+     * Constructeur
+     */
+    public AsyncTaskSolde(Context ctx, ListView listView, String dateAccount) {
         this.ctx = ctx;
         this.listView = listView;
-        this.date = date;
+        this.dateAccount = dateAccount;
     }
 
+    /**
+     * Traitement de la tache de fond qui récupère la liste des soldes en bdd.
+     *
+     * @param voids .
+     * @return Liste de soldes en fonction de la date {@code List<Solde>}
+     */
     @Override
     protected List<Solde> doInBackground(Void... voids) {
         AppDataBase bdd = Connexion.getConnexion(ctx);
-        List<Solde> soldes = bdd.soldeDao().getAll();
-        return soldes;
+        return bdd.soldeDao().getAllWhereDate(dateAccount);
     }
 
+    /**
+     * Affichage de la liste soldes dans l'activité.
+     * Gestion du click sur un élément de la liste.
+     *
+     * @param soldes Liste des soldes.
+     */
     @Override
     protected void onPostExecute(List<Solde> soldes) {
         super.onPostExecute(soldes);
         ListSoldeAdapter listSoldeAdapter = new ListSoldeAdapter(ctx, R.layout.ligne_list_solde, soldes);
         listView.setAdapter(listSoldeAdapter);
         ViewGroup.LayoutParams params = listView.getLayoutParams();
-        int sizeHeight = soldes.size() * 250;
-        params.height = sizeHeight;
+        params.height = soldes.size() * 250;
         listView.setLayoutParams(params);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -62,6 +91,7 @@ public class AsyncTaskSolde extends AsyncTask<Void, Solde, List<Solde>>  {
                 intent.putExtra("libelleSolde", soldes.get(i).getLibelle());
                 intent.putExtra("montantSolde", String.valueOf(soldes.get(i).getMontant()));
                 intent.putExtra("idSolde", String.valueOf(soldes.get(i).getId()));
+                intent.putExtra("dateAccount", dateAccount);
                 ctx.startActivity(intent);
             }
         });

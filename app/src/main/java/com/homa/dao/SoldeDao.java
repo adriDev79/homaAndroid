@@ -13,11 +13,20 @@ import java.util.List;
 public interface SoldeDao {
 
     /**
+     * Liste des soldes
      *
      * @return {@code LinkedList<Revenu>}
      */
     @Query("SELECT * FROM solde")
     List<Solde> getAll();
+
+    /**
+     * Liste des soldes en fonction de la date choisis
+     *
+     * @return {@code LinkedList<Revenu>}
+     */
+    @Query("SELECT * FROM solde WHERE date_de_creation = :date")
+    List<Solde> getAllWhereDate(String date);
 
     /**
      * Ajouter un solde

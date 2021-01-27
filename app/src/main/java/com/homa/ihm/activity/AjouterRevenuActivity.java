@@ -50,13 +50,14 @@ public class AjouterRevenuActivity extends AppCompatActivity {
 
         if (!HomaUtils.EMPTY.equals(libelle) && montant != 0f) {
             Log.i(HomaUtils.TAG, HomaUtils.DEBUT + HomaUtils.ACTION + HomaUtils.ACTION_AJOUTER_REVENU);
-            Date date = new Date();
-            String today = date.toString();
+
+            Intent intent = getIntent();
+            String dateCreation = intent.getStringExtra("dateAccount").toString();
 
             Revenu revenu = new Revenu();
             revenu.setLibelle(libelle);
             revenu.setMontant(montant);
-            revenu.setDateDeCreation(today);
+            revenu.setDateDeCreation(dateCreation);
             revenu.setDateDeReception(dateReception);
 
             try {
@@ -67,6 +68,7 @@ public class AjouterRevenuActivity extends AppCompatActivity {
                 Toast.makeText(this, HomaToastUtils.REVENU_AJOUTER, Toast.LENGTH_SHORT).show();
                 Log.i(HomaUtils.TAG, HomaUtils.FIN + HomaUtils.ACTION + HomaUtils.ACTION_AJOUTER_REVENU + HomaUtils.RESULTAT + HomaUtils.SUCCESS);
                 Intent intention = new Intent(this, MainActivity.class);
+                intention.putExtra("dateAccount", revenu.getDateDeCreation());
                 startActivity(intention);
             } catch (Exception e) {
                 Toast.makeText(this, HomaToastUtils.ECHEC_REVENU_AJOUTER, Toast.LENGTH_SHORT).show();
@@ -80,7 +82,10 @@ public class AjouterRevenuActivity extends AppCompatActivity {
     }
 
     public void clickRetourAjouterRevenu(View view) {
+        Intent intent = getIntent();
+
         Intent intention = new Intent(this, MainActivity.class);
+        intention.putExtra("dateAccount", intent.getStringExtra("dateAccount").toString());
         startActivity(intention);
     }
 

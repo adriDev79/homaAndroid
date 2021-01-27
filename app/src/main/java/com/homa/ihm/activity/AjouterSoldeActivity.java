@@ -42,10 +42,13 @@ public class AjouterSoldeActivity extends AppCompatActivity {
 
         if (!HomaUtils.EMPTY.equals(libelle) && montant != 0f) {
             Log.i(HomaUtils.TAG, HomaUtils.DEBUT + HomaUtils.ACTION + HomaUtils.ACTION_AJOUTER_SOLDE);
+            Intent intent = getIntent();
+            String dateCreation = intent.getStringExtra("dateAccount").toString();
 
             Solde solde = new Solde();
             solde.setLibelle(libelle);
             solde.setMontant(montant);
+            solde.setDateCreation(dateCreation);
 
             try {
                 new Thread(() -> {
@@ -55,6 +58,7 @@ public class AjouterSoldeActivity extends AppCompatActivity {
                 Toast.makeText(this, HomaToastUtils.SOLDE_AJOUTER, Toast.LENGTH_SHORT).show();
                 Log.i(HomaUtils.TAG, HomaUtils.FIN + HomaUtils.ACTION + HomaUtils.ACTION_AJOUTER_SOLDE + HomaUtils.RESULTAT + HomaUtils.SUCCESS);
                 Intent intention = new Intent(this, MainActivity.class);
+                intention.putExtra("dateAccount", solde.getDateCreation());
                 startActivity(intention);
             } catch (Exception e) {
                 Toast.makeText(this, HomaToastUtils.ECHEC_SOLDE_AJOUTER, Toast.LENGTH_SHORT).show();
@@ -68,7 +72,10 @@ public class AjouterSoldeActivity extends AppCompatActivity {
     }
 
     public void clickRetourAjouterSolde(View view) {
+        Intent intent = getIntent();
+
         Intent intention = new Intent(this, MainActivity.class);
+        intention.putExtra("dateAccount", intent.getStringExtra("dateAccount").toString());
         startActivity(intention);
     }
 

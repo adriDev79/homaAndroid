@@ -15,7 +15,7 @@ import java.util.List;
 public interface DepenseAnnexeDao {
 
     /**
-     * Récupere toute les dépenses annexes
+     * Récupere toute les dépenses annexes.
      *
      * @return {@code LinkedList<DepenseAnnexe>}
      */
@@ -23,7 +23,15 @@ public interface DepenseAnnexeDao {
     List<DepenseAnnexe> getAll();
 
     /**
-     * Récupere toute les dépenses annexes si elles sont payées
+     * Récupere toute les dépenses annexes en fonction de la date choisis.
+     *
+     * @return {@code LinkedList<DepenseAnnexe>}
+     */
+    @Query("SELECT * FROM depenseannexe WHERE date_de_creation = :date")
+    List<DepenseAnnexe> getAllWhereDate(String date);
+
+    /**
+     * Récupere toute les dépenses annexes si elles sont payées.
      *
      * @return {@code LinkedList<DepenseAnnexe>}
      */
@@ -31,7 +39,15 @@ public interface DepenseAnnexeDao {
     List<DepenseAnnexe> getAllIsPayed(boolean isPayed);
 
     /**
-     * Ajouter une dépense annexe
+     * Récupere toute les dépenses annexes en fonction de la date choisis et si elles sont payées.
+     *
+     * @return {@code LinkedList<DepenseAnnexe>}
+     */
+    @Query("SELECT * FROM depenseannexe WHERE date_de_creation = :date AND payer = :isPayed")
+    List<DepenseAnnexe> getAllWhereDateAndIsPayed(boolean isPayed, String date);
+
+    /**
+     * Ajouter une dépense annexe.
      *
      * @param depenseAnnexe .
      * @return {@code depenseAnnexe}
@@ -40,7 +56,7 @@ public interface DepenseAnnexeDao {
     void insert(DepenseAnnexe depenseAnnexe);
 
     /**
-     * Mettre à jour une dépense Annexe
+     * Mettre à jour une dépense Annexe.
      *
      * @return {@code DepenseAnnexe}
      */
@@ -56,7 +72,7 @@ public interface DepenseAnnexeDao {
     void update(int id, String libelle, float montant, String dateModif, int idTypeDepense, String datePrel, boolean payer, String finPrelevement);
 
     /**
-     * Supprimer une dépense annexe
+     * Supprimer une dépense annexe.
      *
      * @return {@code DepenseAnnexe}
      */

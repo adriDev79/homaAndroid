@@ -2,6 +2,7 @@ package com.homa.utils;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.View;
 import android.view.ViewGroup;
@@ -164,5 +165,10 @@ public class HomaUtils {
             button.setText(R.string.moins);
             listView.setVisibility(View.VISIBLE);
         }
+    }
+
+    public static String dateFormat(String pattern, Object date) {
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern, Locale.FRANCE);
+        return sdf.format(date);
     }
 }

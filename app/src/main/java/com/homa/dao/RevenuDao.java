@@ -21,6 +21,13 @@ public interface RevenuDao {
     List<Revenu> getAll();
 
     /**
+     *
+     * @return {@code LinkedList<Revenu>}
+     */
+    @Query("SELECT * FROM revenu WHERE date_de_creation = :date")
+    List<Revenu> getAllWhereDate(String date);
+
+    /**
      * Ajouter un revenu
      *
      * @param revenu .

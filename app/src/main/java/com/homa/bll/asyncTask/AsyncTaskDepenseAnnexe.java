@@ -1,5 +1,6 @@
 package com.homa.bll.asyncTask;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -17,25 +18,63 @@ import com.homa.utils.HomaUtils;
 
 import java.util.List;
 
+/**
+ * Classe qui gére la liste des dépenses annexes
+ */
+@SuppressLint("StaticFieldLeak")
 public class AsyncTaskDepenseAnnexe extends AsyncTask<Void, DepenseAnnexe, List<DepenseAnnexe>> {
 
-    private Context ctx;
-    private ListView listView;
+    /**
+     * Context de l'activité {@code Context}
+     */
+    private final Context ctx;
 
-    public AsyncTaskDepenseAnnexe() {
-    }
+    /**
+     * ListView des dépenses annexes {@code ListView}
+     */
+    private final ListView listView;
 
+    /**
+     * Date des comptes en cours {@code Date}
+     */
+
+    private String dateAccount;
+
+    /**
+     * Constructeur
+     */
     public AsyncTaskDepenseAnnexe(Context ctx, ListView listView) {
         this.ctx = ctx;
         this.listView = listView;
     }
 
+    /**
+     * Constructeur
+     */
+    public AsyncTaskDepenseAnnexe(Context ctx, ListView listView, String dateAccount) {
+        this.ctx = ctx;
+        this.listView = listView;
+        this.dateAccount = dateAccount;
+    }
+
+    /**
+     * Traitement de la tache de fond qui récupère la liste des dépenses annexes en bdd
+     *
+     * @param voids .
+     * @return Liste de dépenses annexes en fonction de la date {@code List<DepenseAnnexe>}
+     */
     @Override
     protected List<DepenseAnnexe> doInBackground(Void... voids) {
         AppDataBase bdd = Connexion.getConnexion(ctx);
-        return bdd.depenseAnnexeDao().getAll();
+        return bdd.depenseAnnexeDao().getAllWhereDate(dateAccount);
     }
 
+    /**
+     * Affichage de la liste des dépense annexes dans l'activité.
+     * Gestion du click sur un élément de la liste.
+     *
+     * @param depenseAnnexes Liste des dépense annexes
+     */
     @Override
     protected void onPostExecute(List<DepenseAnnexe> depenseAnnexes) {
         super.onPostExecute(depenseAnnexes);
@@ -61,6 +100,8 @@ public class AsyncTaskDepenseAnnexe extends AsyncTask<Void, DepenseAnnexe, List<
                 intent.putExtra("idDepenseAnnexe", String.valueOf(depenseAnnexes.get(i).getId()));
                 intent.putExtra("isPayer", String.valueOf(depenseAnnexes.get(i).isPayer()));
                 intent.putExtra("finPrelevement", String.valueOf(depenseAnnexes.get(i).getDateFinPrelevement()));
+                intent.putExtra("dateAccount", dateAccount);
+
                 ctx.startActivity(intent);
             }
         });

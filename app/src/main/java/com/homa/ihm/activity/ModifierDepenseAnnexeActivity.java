@@ -108,6 +108,7 @@ public class ModifierDepenseAnnexeActivity extends AppCompatActivity {
                 Toast.makeText(this, HomaToastUtils.DEPENSE_ANNEXE_MODIFIER, Toast.LENGTH_SHORT).show();
                 Log.i(HomaUtils.TAG, HomaUtils.FIN + HomaUtils.ACTION + HomaUtils.ACTION_MODIFIER_DEPENSE_ANNEXE + HomaUtils.RESULTAT + HomaUtils.SUCCESS);
                 Intent intention = new Intent(this, MainActivity.class);
+                intention.putExtra("dateAccount", intent.getStringExtra("dateAccount"));
                 startActivity(intention);
             } catch (Exception e) {
                 Toast.makeText(this, HomaToastUtils.ECHEC_DEPENSE_ANNEXE_MODIFIER, Toast.LENGTH_SHORT).show();
@@ -135,6 +136,7 @@ public class ModifierDepenseAnnexeActivity extends AppCompatActivity {
                 Toast.makeText(this, HomaToastUtils.DEPENSE_ANNEXE_SUPPRIMER, Toast.LENGTH_SHORT).show();
                 Log.i(HomaUtils.TAG, HomaUtils.FIN + HomaUtils.ACTION + HomaUtils.ACTION_SUPPRIMER_DEPENSE_ANNEXE + HomaUtils.RESULTAT + HomaUtils.SUCCESS);
                 Intent intention = new Intent(this, MainActivity.class);
+                intention.putExtra("dateAccount", intent.getStringExtra("dateAccount"));
                 startActivity(intention);
             } catch (Exception e) {
                 Toast.makeText(this, HomaToastUtils.ECHEC_DEPENSE_ANNEXE_SUPPRIMER, Toast.LENGTH_SHORT).show();
@@ -148,7 +150,10 @@ public class ModifierDepenseAnnexeActivity extends AppCompatActivity {
     }
 
     public void clickRetourModifDepenseAnnexe(View view) {
+        Intent intent = getIntent();
+
         Intent intention = new Intent(this,MainActivity.class);
+        intention.putExtra("dateAccount", intent.getStringExtra("dateAccount"));
         startActivity(intention);
     }
 

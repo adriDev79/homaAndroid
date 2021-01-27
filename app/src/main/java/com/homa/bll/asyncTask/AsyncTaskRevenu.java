@@ -18,12 +18,10 @@ import com.homa.ihm.activity.ModifierRevenuActivity;
 import com.homa.ihm.adapter.ListRevenuAdapter;
 import com.homa.utils.HomaUtils;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
- * Classe qui va gérer la liste des revenus
+ * Classe qui gére la liste des revenus
  */
 @SuppressLint("StaticFieldLeak")
 public class AsyncTaskRevenu extends AsyncTask<Void, Revenu, List<Revenu>> {
@@ -31,22 +29,17 @@ public class AsyncTaskRevenu extends AsyncTask<Void, Revenu, List<Revenu>> {
     /**
      * Context de l'activité {@code Context}
      */
-    private Context ctx;
+    private final Context ctx;
 
     /**
      * ListView des revenus {@code ListView}
      */
-    private ListView listView;
+    private final ListView listView;
 
     /**
      * Date des comptes en cours {@code Date}
      */
-    private Date dateAccount;
-
-    /**
-     * Constructeur
-     */
-    public AsyncTaskRevenu() {}
+    private String dateAccount;
 
     /**
      * Constructeur
@@ -59,7 +52,7 @@ public class AsyncTaskRevenu extends AsyncTask<Void, Revenu, List<Revenu>> {
     /**
      * Constructeur
      */
-    public AsyncTaskRevenu(Context ctx, ListView listView, Date dateAccount) {
+    public AsyncTaskRevenu(Context ctx, ListView listView, String dateAccount) {
         this.ctx = ctx;
         this.listView = listView;
         this.dateAccount = dateAccount;
@@ -75,40 +68,27 @@ public class AsyncTaskRevenu extends AsyncTask<Void, Revenu, List<Revenu>> {
     @Override
     protected List<Revenu> doInBackground(Void... voids) {
         AppDataBase bdd = Connexion.getConnexion(ctx);
-        List<Revenu> revenus = bdd.revenuDao().getAll();
-        List<Revenu> revenusTrier = new ArrayList<>();
-
-        for (Revenu r : revenus) {
-            Date dateRevenu = new Date(r.getDateDeCreation());
-            int monthRevenu = dateRevenu.getMonth();
-            int yearRevenu = dateRevenu.getYear();
-            if (monthRevenu == dateAccount.getMonth() && yearRevenu == dateAccount.getYear()) {
-                revenusTrier.add(r);
-            }
-        }
-        return revenusTrier;
+        return bdd.revenuDao().getAllWhereDate(dateAccount);
     }
 
     /**
      * Affichage de la liste des revenus dans l'activité.
+     * Gestion du click sur un élément de la liste.
      *
-     * @param revenusTrier Liste de revenus trier
+     * @param revenus Liste de revenus trier
      */
     @Override
-    protected void onPostExecute(List<Revenu> revenusTrier) {
-        super.onPostExecute(revenusTrier);
+    protected void onPostExecute(List<Revenu> revenus) {
+        super.onPostExecute(revenus);
 //
-        ListRevenuAdapter listRevenuAdapter = new ListRevenuAdapter(ctx, R.layout.ligne_list_revenu, revenusTrier);
+        ListRevenuAdapter listRevenuAdapter = new ListRevenuAdapter(ctx, R.layout.ligne_list_revenu, revenus);
         listView.setAdapter(listRevenuAdapter);
 
         // Modification de la taille de la liste en fonction du nombre de revenus
         ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = revenusTrier.size() * 250;
+        params.height = revenus.size() * 250;
         listView.setLayoutParams(params);
 
-        /**
-         * Click sur un élément de la liste pour accéder à la page de modification.
-         */
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -116,10 +96,11 @@ public class AsyncTaskRevenu extends AsyncTask<Void, Revenu, List<Revenu>> {
                 Intent intent = new Intent(ctx, ModifierRevenuActivity.class);
 
                 //TODO: transférer directement l'objet
-                intent.putExtra("libelle", revenusTrier.get(i).getLibelle());
-                intent.putExtra("dateReception", revenusTrier.get(i).getDateDeReception());
-                intent.putExtra("montant", String.valueOf(revenusTrier.get(i).getMontant()));
-                intent.putExtra("id", String.valueOf(revenusTrier.get(i).getId()));
+                intent.putExtra("libelle", revenus.get(i).getLibelle());
+                intent.putExtra("dateReception", revenus.get(i).getDateDeReception());
+                intent.putExtra("montant", String.valueOf(revenus.get(i).getMontant()));
+                intent.putExtra("id", String.valueOf(revenus.get(i).getId()));
+                intent.putExtra("dateAccount", dateAccount);
 
                 ctx.startActivity(intent);
             }

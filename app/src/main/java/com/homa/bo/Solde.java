@@ -25,6 +25,12 @@ public class Solde {
     @ColumnInfo(name = "montant")
     private float montant;
 
+    /**
+     * date de création {@code Float}
+     */
+    @ColumnInfo(name = "date_de_creation")
+    private String dateCreation;
+
     public int getId() {
         return id;
     }
@@ -47,5 +53,13 @@ public class Solde {
 
     public void setMontant(float montant) {
         this.montant = montant;
+    }
+
+    public String getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(String dateCreation) {
+        this.dateCreation = dateCreation;
     }
 }
