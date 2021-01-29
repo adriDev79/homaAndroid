@@ -13,13 +13,14 @@ import com.homa.R;
 import com.homa.bo.Solde;
 import com.homa.dao.AppDataBase;
 import com.homa.dao.Connexion;
+import com.homa.dao.SqlService;
 import com.homa.ihm.activity.ModifierSoldeActivity;
 import com.homa.ihm.adapter.ListSoldeAdapter;
 
 import java.util.List;
 
 /**
- * Classe qui gére la liste des soldes.
+ * Tâche qui gére la liste des soldes.
  */
 @SuppressLint("StaticFieldLeak")
 public class AsyncTaskSolde extends AsyncTask<Void, Solde, List<Solde>>  {
@@ -38,15 +39,8 @@ public class AsyncTaskSolde extends AsyncTask<Void, Solde, List<Solde>>  {
      * Date des comptes en cours {@code Date}
      */
 
-    private String dateAccount;
+    private final String dateAccount;
 
-    /**
-     * Constructeur
-     */
-    public AsyncTaskSolde(Context ctx, ListView listView) {
-        this.ctx = ctx;
-        this.listView = listView;
-    }
 
     /**
      * Constructeur
@@ -65,8 +59,8 @@ public class AsyncTaskSolde extends AsyncTask<Void, Solde, List<Solde>>  {
      */
     @Override
     protected List<Solde> doInBackground(Void... voids) {
-        AppDataBase bdd = Connexion.getConnexion(ctx);
-        return bdd.soldeDao().getAllWhereDate(dateAccount);
+        SqlService sqlService = new SqlService();
+        return sqlService.getAllSoldeWhereDate(ctx, dateAccount);
     }
 
     /**
@@ -78,8 +72,10 @@ public class AsyncTaskSolde extends AsyncTask<Void, Solde, List<Solde>>  {
     @Override
     protected void onPostExecute(List<Solde> soldes) {
         super.onPostExecute(soldes);
+
         ListSoldeAdapter listSoldeAdapter = new ListSoldeAdapter(ctx, R.layout.ligne_list_solde, soldes);
         listView.setAdapter(listSoldeAdapter);
+
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = soldes.size() * 250;
         listView.setLayoutParams(params);

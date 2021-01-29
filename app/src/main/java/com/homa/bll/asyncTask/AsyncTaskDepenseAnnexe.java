@@ -10,8 +10,7 @@ import android.widget.ListView;
 
 import com.homa.R;
 import com.homa.bo.DepenseAnnexe;
-import com.homa.dao.AppDataBase;
-import com.homa.dao.Connexion;
+import com.homa.dao.SqlService;
 import com.homa.ihm.activity.ModifierDepenseAnnexeActivity;
 import com.homa.ihm.adapter.ListDepenseAnnexeAdapter;
 import com.homa.utils.HomaUtils;
@@ -38,15 +37,7 @@ public class AsyncTaskDepenseAnnexe extends AsyncTask<Void, DepenseAnnexe, List<
      * Date des comptes en cours {@code Date}
      */
 
-    private String dateAccount;
-
-    /**
-     * Constructeur
-     */
-    public AsyncTaskDepenseAnnexe(Context ctx, ListView listView) {
-        this.ctx = ctx;
-        this.listView = listView;
-    }
+    private final String dateAccount;
 
     /**
      * Constructeur
@@ -65,8 +56,8 @@ public class AsyncTaskDepenseAnnexe extends AsyncTask<Void, DepenseAnnexe, List<
      */
     @Override
     protected List<DepenseAnnexe> doInBackground(Void... voids) {
-        AppDataBase bdd = Connexion.getConnexion(ctx);
-        return bdd.depenseAnnexeDao().getAllWhereDate(dateAccount);
+        SqlService sqlService = new SqlService();
+        return sqlService.getAllDAWhereDate(ctx, dateAccount);
     }
 
     /**

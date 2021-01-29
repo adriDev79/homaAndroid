@@ -3,22 +3,19 @@ package com.homa.bll.asyncTask;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.homa.R;
 import com.homa.bo.Total;
-import com.homa.dao.AppDataBase;
-import com.homa.dao.Connexion;
+import com.homa.dao.SqlService;
 import com.homa.ihm.adapter.ListBilanAdapter;
-import com.homa.utils.HomaUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe qui gére la liste des soldes.
+ * Tâche qui gére la liste des soldes.
  */
 @SuppressLint("StaticFieldLeak")
 public class AsyncTaskBilan extends AsyncTask<Void, Total, List<Total>>  {
@@ -37,15 +34,7 @@ public class AsyncTaskBilan extends AsyncTask<Void, Total, List<Total>>  {
      * Date des comptes en cours {@code Date}
      */
 
-    private String dateAccount;
-
-    /**
-     * Constructeur
-     */
-    public AsyncTaskBilan(Context ctx, ListView listView) {
-        this.ctx = ctx;
-        this.listView = listView;
-    }
+    private final String dateAccount;
 
     /**
      * Constructeur
@@ -73,20 +62,20 @@ public class AsyncTaskBilan extends AsyncTask<Void, Total, List<Total>>  {
         final float[] montantTotalDepenseAnnexe = {0f};
         final float[] montantTotalsolde = {0f};
 
-        AppDataBase bdd = Connexion.getConnexion(ctx);
+        SqlService sqlService = new SqlService();
 
-        bdd.revenuDao().getAllWhereDate(dateAccount).forEach(i -> montantTotalRevenu[0] += i.getMontant());
+        sqlService.getAllRevenuWhereDate(ctx, dateAccount).forEach(i -> montantTotalRevenu[0] += i.getMontant());
         totaux.add(new Total("Total des revenus", montantTotalRevenu[0]));
 
-        bdd.depenseFixeDao().getAllWhereDateAndIsPayed(isPayed, dateAccount).forEach(i -> montantTotalDepenseFixe[0] += i.getMontant());
+        sqlService.getAllDFWhereDateAndIsPayed(ctx, dateAccount, isPayed).forEach(i -> montantTotalDepenseFixe[0] += i.getMontant());
         totaux.add(new Total("Total des dépenses fixes", montantTotalDepenseFixe[0]));
 
-        bdd.depenseAnnexeDao().getAllWhereDateAndIsPayed(isPayed, dateAccount).forEach(i -> montantTotalDepenseAnnexe[0] += i.getMontant());
+        sqlService.getAllDAWhereDateAndIsPayed(ctx, dateAccount, isPayed).forEach(i -> montantTotalDepenseAnnexe[0] += i.getMontant());
         totaux.add(new Total("Total des dépenses annexes", montantTotalDepenseAnnexe[0]));
 
         totaux.add(new Total("Total des dépenses", montantTotalDepenseFixe[0] + montantTotalDepenseAnnexe[0]));
 
-        bdd.soldeDao().getAllWhereDate(dateAccount).forEach(i -> montantTotalsolde[0] += i.getMontant());
+        sqlService.getAllSoldeWhereDate(ctx, dateAccount).forEach(i -> montantTotalsolde[0] += i.getMontant());
         totaux.add(new Total("Total solde compte(s)", montantTotalsolde[0]));
 
         totaux.add(new Total("Solde final", montantTotalRevenu[0] + montantTotalsolde[0] - (montantTotalDepenseFixe[0] + montantTotalDepenseAnnexe[0])));

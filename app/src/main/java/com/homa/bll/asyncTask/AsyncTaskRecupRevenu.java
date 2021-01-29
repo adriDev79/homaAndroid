@@ -16,6 +16,7 @@ import com.homa.R;
 import com.homa.bo.Revenu;
 import com.homa.dao.AppDataBase;
 import com.homa.dao.Connexion;
+import com.homa.dao.SqlService;
 import com.homa.ihm.activity.ModifierRevenuActivity;
 import com.homa.ihm.adapter.ListRevenuAdapter;
 import com.homa.utils.HomaToastUtils;
@@ -64,12 +65,15 @@ public class AsyncTaskRecupRevenu extends AsyncTask<Void, Revenu, List<Revenu>> 
      */
     @Override
     protected List<Revenu> doInBackground(Void... voids) {
-        AppDataBase bdd = Connexion.getConnexion(ctx);
-        List<Revenu> revenus = bdd.revenuDao().getAllWhereDate(datePreviousMonth);
+        SqlService sqlService = new SqlService();
+
+        List<Revenu> revenus = sqlService.getAllRevenuWhereDate(ctx, datePreviousMonth);
+
         if (revenus.size() > 0) {
             for (Revenu r : revenus) {
                 String dateReceptionPreviousMonth = r.getDateDeReception();
                 String dateReceptionCurrentMonth = r.getDateDeReception();
+
                 if (!dateReceptionPreviousMonth.equals("Pas de date")) {
                     String[] date = dateReceptionPreviousMonth.split("/");
                     int month = Integer.parseInt(date [1]);
@@ -90,7 +94,8 @@ public class AsyncTaskRecupRevenu extends AsyncTask<Void, Revenu, List<Revenu>> 
                 revenu.setLibelle(r.getLibelle());
                 revenu.setMontant(r.getMontant());
                 revenu.setDateDeReception(dateReceptionCurrentMonth);
-                bdd.revenuDao().insert(revenu);
+
+                sqlService.insertRevenu(ctx, revenu);
             }
         }
         return null;

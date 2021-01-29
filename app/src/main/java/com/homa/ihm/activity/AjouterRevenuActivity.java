@@ -2,12 +2,10 @@ package com.homa.ihm.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,15 +13,10 @@ import android.widget.Toast;
 import com.homa.MainActivity;
 import com.homa.R;
 import com.homa.bo.Revenu;
-import com.homa.dao.AppDataBase;
-import com.homa.dao.Connexion;
+
+import com.homa.dao.SqlService;
 import com.homa.utils.HomaToastUtils;
 import com.homa.utils.HomaUtils;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 public class AjouterRevenuActivity extends AppCompatActivity {
 
@@ -38,6 +31,21 @@ public class AjouterRevenuActivity extends AppCompatActivity {
         super.onResume();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    /**
+     * fonction déclencher au clique du boutton valider et qui ajoute un nouveau revenu.
+     *
+     * @param view {@code View}
+     */
     public void validerAjoutRevenu(View view) {
         EditText etLibelle = findViewById(R.id.et_libelle);
         String libelle = etLibelle.getText().toString().equals("") ? HomaUtils.EMPTY : etLibelle.getText().toString();
@@ -52,7 +60,7 @@ public class AjouterRevenuActivity extends AppCompatActivity {
             Log.i(HomaUtils.TAG, HomaUtils.DEBUT + HomaUtils.ACTION + HomaUtils.ACTION_AJOUTER_REVENU);
 
             Intent intent = getIntent();
-            String dateCreation = intent.getStringExtra("dateAccount").toString();
+            String dateCreation = intent.getStringExtra("dateAccount");
 
             Revenu revenu = new Revenu();
             revenu.setLibelle(libelle);
@@ -62,11 +70,13 @@ public class AjouterRevenuActivity extends AppCompatActivity {
 
             try {
                 new Thread(() -> {
-                    AppDataBase bdd = Connexion.getConnexion(AjouterRevenuActivity.this);
-                    bdd.revenuDao().insert(revenu);
+                    SqlService sqlService = new SqlService();
+                    sqlService.insertRevenu(this, revenu);
                 }).start();
+
                 Toast.makeText(this, HomaToastUtils.REVENU_AJOUTER, Toast.LENGTH_SHORT).show();
                 Log.i(HomaUtils.TAG, HomaUtils.FIN + HomaUtils.ACTION + HomaUtils.ACTION_AJOUTER_REVENU + HomaUtils.RESULTAT + HomaUtils.SUCCESS);
+
                 Intent intention = new Intent(this, MainActivity.class);
                 intention.putExtra("dateAccount", revenu.getDateDeCreation());
                 startActivity(intention);
@@ -81,24 +91,24 @@ public class AjouterRevenuActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * fonction déclenché au clique du boutton retour.
+     *
+     * @param view {@code View}
+     */
     public void clickRetourAjouterRevenu(View view) {
         Intent intent = getIntent();
 
         Intent intention = new Intent(this, MainActivity.class);
-        intention.putExtra("dateAccount", intent.getStringExtra("dateAccount").toString());
+        intention.putExtra("dateAccount", intent.getStringExtra("dateAccount"));
         startActivity(intention);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
+    /**
+     * Affichage du calendrier pour la date de reception du revenu.
+     *
+     * @param view {@code View}
+     */
     public void clickCalendar(View view) {
         TextView textView= findViewById(R.id.tv_reception);
         HomaUtils.calendar(view.getContext(),textView);

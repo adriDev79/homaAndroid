@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -13,8 +12,7 @@ import android.widget.ListView;
 
 import com.homa.R;
 import com.homa.bo.DepenseFixe;
-import com.homa.dao.AppDataBase;
-import com.homa.dao.Connexion;
+import com.homa.dao.SqlService;
 import com.homa.ihm.activity.ModifierDepenseFixeActivity;
 import com.homa.ihm.adapter.ListDepenseFixeAdapter;
 import com.homa.utils.HomaUtils;
@@ -50,14 +48,6 @@ public class AsyncTaskDepenseFixe extends AsyncTask<Void, DepenseFixe, List<Depe
     /**
      * Constructeur
      */
-    public AsyncTaskDepenseFixe(Context ctx, ListView view) {
-        this.ctx = ctx;
-        this.listView = view;
-    }
-
-    /**
-     * Constructeur
-     */
     public AsyncTaskDepenseFixe(Context ctx, ListView view, String dateAccount) {
         this.ctx = ctx;
         this.listView = view;
@@ -82,8 +72,8 @@ public class AsyncTaskDepenseFixe extends AsyncTask<Void, DepenseFixe, List<Depe
      */
     @Override
     protected List<DepenseFixe> doInBackground(Void... voids) {
-        AppDataBase bdd = Connexion.getConnexion(ctx);
-        return bdd.depenseFixeDao().getAllWhereDate(dateAccount);
+        SqlService sqlService = new SqlService();
+        return sqlService.getAllDFWhereDate(ctx, dateAccount);
     }
 
     /**
@@ -95,19 +85,15 @@ public class AsyncTaskDepenseFixe extends AsyncTask<Void, DepenseFixe, List<Depe
     @Override
     protected void onPostExecute(List<DepenseFixe> depenseFixes) {
         super.onPostExecute(depenseFixes);
-        Log.i(HomaUtils.TAG, "je passe ici");
 
-        Log.i(HomaUtils.TAG, "taille " + depenseFixes.size());
-
+        // Si la liste est vide on affiche le message pour récuperer les dépense du mois précédent
         if(depenseFixes.size() == 0) {
             if (llRecupDepenseFixe != null) {
                 HomaUtils.visibiltyLinearLayout(llRecupDepenseFixe, View.VISIBLE, 100);
-                Log.i(HomaUtils.TAG, "je suis visible");
             }
         } else {
             if (llRecupDepenseFixe != null) {
                 HomaUtils.visibiltyLinearLayout(llRecupDepenseFixe, View.INVISIBLE, 0);
-                Log.i(HomaUtils.TAG, "je ne suis pas visible");
             }
         }
 

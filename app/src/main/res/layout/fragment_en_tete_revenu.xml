@@ -17,13 +17,14 @@
         android:layout_marginTop="10dp"/>
 
     <ImageButton
+        android:id="@+id/ibtn_ajouter_revenu"
         android:layout_width="70dp"
         android:layout_height="match_parent"
         android:layout_gravity="right|center"
         android:layout_marginRight="140dp"
         android:backgroundTint="#E74C3C"
         android:src="@drawable/ic_baseline_add_box_24"
-        android:onClick="clickAjouterRevenu"
+        android:onClick="addActivity"
         tools:ignore="OnClick" />
 
     <Button
@@ -37,7 +38,7 @@
         android:textColor="@color/white"
         android:textStyle="bold"
         android:layout_marginRight="5dp"
-        android:onClick="visibilityListRevenu"
+        android:onClick="visibility"
         tools:ignore="OnClick" />
 
 </FrameLayout>

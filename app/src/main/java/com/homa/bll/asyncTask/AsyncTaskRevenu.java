@@ -17,6 +17,7 @@ import com.homa.R;
 import com.homa.bo.Revenu;
 import com.homa.dao.AppDataBase;
 import com.homa.dao.Connexion;
+import com.homa.dao.SqlService;
 import com.homa.ihm.activity.ModifierRevenuActivity;
 import com.homa.ihm.adapter.ListRevenuAdapter;
 import com.homa.utils.HomaUtils;
@@ -42,20 +43,12 @@ public class AsyncTaskRevenu extends AsyncTask<Void, Revenu, List<Revenu>> {
     /**
      * Date des comptes en cours {@code Date}
      */
-    private String dateAccount;
+    private final String dateAccount;
 
     /**
      * élément d'affichage du message pour récupérer les revenus du mois précédent {@code LinearLayout}
      */
     private LinearLayout llRecupRevenu;
-
-    /**
-     * Constructeur
-     */
-    public AsyncTaskRevenu(Context ctx, ListView listView) {
-        this.ctx = ctx;
-        this.listView = listView;
-    }
 
     /**
      * Constructeur
@@ -84,8 +77,8 @@ public class AsyncTaskRevenu extends AsyncTask<Void, Revenu, List<Revenu>> {
      */
     @Override
     protected List<Revenu> doInBackground(Void... voids) {
-        AppDataBase bdd = Connexion.getConnexion(ctx);
-        return bdd.revenuDao().getAllWhereDate(dateAccount);
+        SqlService sqlService = new SqlService();
+        return sqlService.getAllRevenuWhereDate(ctx, dateAccount);
     }
 
     /**
@@ -112,7 +105,6 @@ public class AsyncTaskRevenu extends AsyncTask<Void, Revenu, List<Revenu>> {
         listView.setAdapter(listRevenuAdapter);
 
         // Modification de la taille de la liste en fonction du nombre de revenus
-
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = revenus.size() * 250;
         listView.setLayoutParams(params);

@@ -11,14 +11,14 @@ import android.widget.Toast;
 
 import com.homa.MainActivity;
 import com.homa.R;
-import com.homa.dao.AppDataBase;
-import com.homa.dao.Connexion;
+import com.homa.dao.SqlService;
 import com.homa.utils.HomaToastUtils;
 import com.homa.utils.HomaUtils;
 
-import java.util.Date;
+public class
+ModifierSoldeActivity extends AppCompatActivity {
 
-public class ModifierSoldeActivity extends AppCompatActivity {
+    private final SqlService sqlService = new SqlService();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +38,21 @@ public class ModifierSoldeActivity extends AppCompatActivity {
         etMontant.setText(intent.getStringExtra("montantSolde"));
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    /**
+     * Fonction qui valide la modification du solde.
+     *
+     * @param view {@code View}
+     */
     public void clickValiderModifSolde(View view) {
         EditText etLibelle = findViewById(R.id.et_libelle_modif_solde);
         String libelle = etLibelle.getText().toString().equals("") ? HomaUtils.EMPTY : etLibelle.getText().toString();
@@ -52,12 +67,11 @@ public class ModifierSoldeActivity extends AppCompatActivity {
             Log.i(HomaUtils.TAG, HomaUtils.DEBUT + HomaUtils.ACTION + HomaUtils.ACTION_MODIFIER_SOLDE);
 
             try {
-                new Thread(() -> {
-                    AppDataBase bdd = Connexion.getConnexion(ModifierSoldeActivity.this);
-                    bdd.soldeDao().update(id, libelle, montant);
-                }).start();
+                new Thread(() -> sqlService.updateSolde(this, id, libelle, montant)).start();
+
                 Toast.makeText(this, HomaToastUtils.SOLDE_MODIFIER, Toast.LENGTH_SHORT).show();
                 Log.i(HomaUtils.TAG, HomaUtils.FIN + HomaUtils.ACTION + HomaUtils.ACTION_MODIFIER_SOLDE + HomaUtils.RESULTAT + HomaUtils.SUCCESS);
+
                 Intent intention = new Intent(this, MainActivity.class);
                 intention.putExtra("dateAccount", intent.getStringExtra("dateAccount"));
                 startActivity(intention);
@@ -72,6 +86,11 @@ public class ModifierSoldeActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Fonction qui supprime le solde.
+     *
+     * @param view {@code View}
+     */
     public void clickSupprimerSolde(View view) {
         Intent intent = getIntent();
         int id = Integer.parseInt(intent.getStringExtra("idSolde"));
@@ -80,12 +99,11 @@ public class ModifierSoldeActivity extends AppCompatActivity {
             Log.i(HomaUtils.TAG, HomaUtils.DEBUT + HomaUtils.ACTION + HomaUtils.ACTION_SUPPRIMER_SOLDE);
 
             try {
-                new Thread(() -> {
-                    AppDataBase bdd = Connexion.getConnexion(ModifierSoldeActivity.this);
-                    bdd.soldeDao().delete(id);
-                }).start();
+                new Thread(() -> sqlService.deleteSolde(this, id)).start();
+
                 Toast.makeText(this, HomaToastUtils.SOLDE_SUPPRIMER, Toast.LENGTH_SHORT).show();
                 Log.i(HomaUtils.TAG, HomaUtils.FIN + HomaUtils.ACTION + HomaUtils.ACTION_SUPPRIMER_SOLDE + HomaUtils.RESULTAT + HomaUtils.SUCCESS);
+
                 Intent intention = new Intent(this, MainActivity.class);
                 intention.putExtra("dateAccount", intent.getStringExtra("dateAccount"));
                 startActivity(intention);
@@ -100,21 +118,16 @@ public class ModifierSoldeActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * fonction déclenché au clique du boutton retour.
+     *
+     * @param view {@code View}
+     */
     public void clickRetourModifSolde(View view) {
         Intent intent = getIntent();
 
         Intent intention = new Intent(this,MainActivity.class);
         intention.putExtra("dateAccount", intent.getStringExtra("dateAccount"));
         startActivity(intention);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 }

@@ -14,18 +14,19 @@ import android.widget.Toast;
 
 import com.homa.MainActivity;
 import com.homa.R;
-import com.homa.bo.DepenseAnnexe;
-import com.homa.bo.DepenseFixe;
-import com.homa.dao.AppDataBase;
-import com.homa.dao.Connexion;
+
+import com.homa.dao.SqlService;
 import com.homa.ihm.adapter.SpinnerAdapter;
 import com.homa.utils.HomaToastUtils;
 import com.homa.utils.HomaUtils;
 
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.Objects;
 
 public class ModifierDepenseAnnexeActivity extends AppCompatActivity {
+
+    private final SqlService sqlService = new SqlService();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +37,7 @@ public class ModifierDepenseAnnexeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        LinkedList<String> typeDepense = new LinkedList<>();
-        typeDepense.addAll(HomaUtils.MAP_TYPE_DEPENSE.keySet());
+        LinkedList<String> typeDepense = new LinkedList<>(HomaUtils.MAP_TYPE_DEPENSE.keySet());
 
         SpinnerAdapter spinnerAdapter = new SpinnerAdapter(this,R.layout.ligne_spinner, typeDepense);
         spinnerAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
@@ -51,7 +51,7 @@ public class ModifierDepenseAnnexeActivity extends AppCompatActivity {
         EditText etMontant = findViewById(R.id.et_montant_modif_depense_annexe);
         etMontant.setText(intent.getStringExtra("montantDepenseAnnexe"));
 
-        int idTypeDepense = (Integer) HomaUtils.MAP_TYPE_DEPENSE.get(intent.getStringExtra("typeDepenseAnnexe")) -1;
+        int idTypeDepense = (Integer) Objects.requireNonNull(HomaUtils.MAP_TYPE_DEPENSE.get(intent.getStringExtra("typeDepenseAnnexe"))) -1;
         spinner.setSelection(idTypeDepense);
 
         TextView etDatePrelevement = findViewById(R.id.tv_modif_date_prelevement_depense_annexe);
@@ -61,20 +61,31 @@ public class ModifierDepenseAnnexeActivity extends AppCompatActivity {
         etFinPrelevement.setText(intent.getStringExtra("finPrelevement"));
 
         CheckBox isPayer = findViewById(R.id.cb_payer_modif_depense_annexe);
-        if ("true".equals(intent.getStringExtra("isPayer"))) {
-            isPayer.setChecked(true);
-        } else {
-            isPayer.setChecked(false);
-        }
+        isPayer.setChecked("true".equals(intent.getStringExtra("isPayer")));
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    /**
+     * Fonction qui valide la modification de la dépense annexe.
+     *
+     * @param view {@code View}
+     */
     public void clickValiderModifDepenseAnnexe(View view) {
         Spinner spTypeDepense = findViewById(R.id.spinner_modif_depense_annexe);
         String typeDepense = spTypeDepense.getSelectedItem().toString().equals("") ? HomaUtils.EMPTY : spTypeDepense.getSelectedItem().toString();
         int idTypeDepense = 0;
 
         if (!typeDepense.equals(HomaUtils.EMPTY)) {
-            idTypeDepense = HomaUtils.MAP_TYPE_DEPENSE.get(typeDepense);
+            idTypeDepense = Objects.requireNonNull(HomaUtils.MAP_TYPE_DEPENSE.get(typeDepense));
         }
         EditText etLibelle = findViewById(R.id.et_libelle_modif_depense_annexe);
         String libelle = etLibelle.getText().toString().equals("") ? HomaUtils.EMPTY : etLibelle.getText().toString();
@@ -101,12 +112,11 @@ public class ModifierDepenseAnnexeActivity extends AppCompatActivity {
 
             try {
                 int finalIdTypeDepense = idTypeDepense;
-                new Thread(() -> {
-                    AppDataBase bdd = Connexion.getConnexion(ModifierDepenseAnnexeActivity.this);
-                    bdd.depenseAnnexeDao().update(id, libelle, montant, today, finalIdTypeDepense, datePrelevement, check, dateFinPrelevement);
-                }).start();
+                new Thread(() -> sqlService.updateDA(this, id, libelle, montant, today, finalIdTypeDepense, datePrelevement, check, dateFinPrelevement)).start();
+
                 Toast.makeText(this, HomaToastUtils.DEPENSE_ANNEXE_MODIFIER, Toast.LENGTH_SHORT).show();
                 Log.i(HomaUtils.TAG, HomaUtils.FIN + HomaUtils.ACTION + HomaUtils.ACTION_MODIFIER_DEPENSE_ANNEXE + HomaUtils.RESULTAT + HomaUtils.SUCCESS);
+
                 Intent intention = new Intent(this, MainActivity.class);
                 intention.putExtra("dateAccount", intent.getStringExtra("dateAccount"));
                 startActivity(intention);
@@ -121,6 +131,11 @@ public class ModifierDepenseAnnexeActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Fonction qui supprime la dépense annexe.
+     *
+     * @param view {@code View}
+     */
     public void clickSupprimerDepenseAnnexe(View view) {
         Intent intent = getIntent();
         int id = Integer.parseInt(intent.getStringExtra("idDepenseAnnexe"));
@@ -129,12 +144,11 @@ public class ModifierDepenseAnnexeActivity extends AppCompatActivity {
             Log.i(HomaUtils.TAG, HomaUtils.DEBUT + HomaUtils.ACTION + HomaUtils.ACTION_SUPPRIMER_DEPENSE_ANNEXE);
 
             try {
-                new Thread(() -> {
-                    AppDataBase bdd = Connexion.getConnexion(ModifierDepenseAnnexeActivity.this);
-                    bdd.depenseAnnexeDao().delete(id);
-                }).start();
+                new Thread(() -> sqlService.deleteDA(this, id)).start();
+
                 Toast.makeText(this, HomaToastUtils.DEPENSE_ANNEXE_SUPPRIMER, Toast.LENGTH_SHORT).show();
                 Log.i(HomaUtils.TAG, HomaUtils.FIN + HomaUtils.ACTION + HomaUtils.ACTION_SUPPRIMER_DEPENSE_ANNEXE + HomaUtils.RESULTAT + HomaUtils.SUCCESS);
+
                 Intent intention = new Intent(this, MainActivity.class);
                 intention.putExtra("dateAccount", intent.getStringExtra("dateAccount"));
                 startActivity(intention);
@@ -149,6 +163,11 @@ public class ModifierDepenseAnnexeActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * fonction déclenché au clique du boutton retour.
+     *
+     * @param view {@code View}
+     */
     public void clickRetourModifDepenseAnnexe(View view) {
         Intent intent = getIntent();
 
@@ -157,20 +176,21 @@ public class ModifierDepenseAnnexeActivity extends AppCompatActivity {
         startActivity(intention);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
+    /**
+     * Affichage du calendrier pour la date du prélévement.
+     *
+     * @param view {@code View}
+     */
     public void clickCalendarModifDepenseAnnexe(View view) {
         HomaUtils.calendar(view.getContext(), findViewById(R.id.tv_modif_date_prelevement_depense_annexe));
     }
 
+    /**
+     * Affichage du calendrier pour la date de fin du prélévement.
+     *
+     * @param view {@code View}
+     */
     public void clickCalendarModifFinPrelevementDepenseAnnexe(View view) {
         HomaUtils.calendar(view.getContext(), findViewById(R.id.tv_modif_fin_date_prelevement_depense_annexe));
     }

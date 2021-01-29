@@ -52,20 +52,16 @@ public class EnTeteFragment extends Fragment {
     }
 
     public void clickContact(View view) {
-        Context ctx = this.getContext();
         ImageButton btnContact = view.findViewById(R.id.btn_contact);
-        btnContact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Compile a Uri with the 'mailto' schema
-                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                        "mailto","homa.app.contact@gmail.com", null));
-                // Subject
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Aide ou demande d'informations");
+        btnContact.setOnClickListener(view1 -> {
+            // Compile a Uri with the 'mailto' schema
+            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                    "mailto","homa.app.contact@gmail.com", null));
+            // Subject
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Aide ou demande d'informations");
 
-                // Check if the device has an email client
-                startActivity(Intent.createChooser(emailIntent,"Choisissez votre application"));
-            }
+            // Check if the device has an email client
+            startActivity(Intent.createChooser(emailIntent,"Choisissez votre application"));
         });
     }
 }

@@ -70,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/white"
                     android:src="@drawable/ic_baseline_check_24"
-                    android:onClick="recupRevenuMoisPrecedent"/>
+                    android:onClick="recoverRevenuOrDF"/>
 
                 <ImageButton
                     android:id="@+id/ibtn_refuser"
@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/white"
                     android:src="@drawable/ic_baseline_clear_24"
-                    android:onClick="annulerRecupRevenus"/>
+                    android:onClick="refuseRecover"/>
 
             </LinearLayout>
 
@@ -110,7 +110,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@string/recup_revenus"
+                    android:text="@string/recup_DF"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     android:textColor="#273746"/>
@@ -121,7 +121,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/white"
                     android:src="@drawable/ic_baseline_check_24"
-                    android:onClick="recupDFMoisPrecedent"/>
+                    android:onClick="recoverRevenuOrDF"/>
 
                 <ImageButton
                     android:id="@+id/ibtn_refuser_DF"
@@ -129,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/white"
                     android:src="@drawable/ic_baseline_clear_24"
-                    android:onClick="annulerRecupDF"/>
+                    android:onClick="refuseRecover"/>
 
             </LinearLayout>
 

@@ -11,14 +11,10 @@ import android.widget.Toast;
 
 import com.homa.MainActivity;
 import com.homa.R;
-import com.homa.bo.Revenu;
 import com.homa.bo.Solde;
-import com.homa.dao.AppDataBase;
-import com.homa.dao.Connexion;
+import com.homa.dao.SqlService;
 import com.homa.utils.HomaToastUtils;
 import com.homa.utils.HomaUtils;
-
-import java.util.Date;
 
 public class AjouterSoldeActivity extends AppCompatActivity {
 
@@ -33,6 +29,21 @@ public class AjouterSoldeActivity extends AppCompatActivity {
         super.onResume();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    /**
+     * fonction déclencher au clique du boutton valider et qui ajoute un nouveau solde.
+     *
+     * @param view {@code View}
+     */
     public void validerAjoutSolde(View view) {
         EditText etLibelle = findViewById(R.id.et_libelle_solde);
         String libelle = etLibelle.getText().toString().equals("") ? HomaUtils.EMPTY : etLibelle.getText().toString();
@@ -43,7 +54,7 @@ public class AjouterSoldeActivity extends AppCompatActivity {
         if (!HomaUtils.EMPTY.equals(libelle) && montant != 0f) {
             Log.i(HomaUtils.TAG, HomaUtils.DEBUT + HomaUtils.ACTION + HomaUtils.ACTION_AJOUTER_SOLDE);
             Intent intent = getIntent();
-            String dateCreation = intent.getStringExtra("dateAccount").toString();
+            String dateCreation = intent.getStringExtra("dateAccount");
 
             Solde solde = new Solde();
             solde.setLibelle(libelle);
@@ -52,8 +63,8 @@ public class AjouterSoldeActivity extends AppCompatActivity {
 
             try {
                 new Thread(() -> {
-                    AppDataBase bdd = Connexion.getConnexion(AjouterSoldeActivity.this);
-                    bdd.soldeDao().insert(solde);
+                    SqlService sqlService = new SqlService();
+                    sqlService.insertSolde(this, solde);
                 }).start();
                 Toast.makeText(this, HomaToastUtils.SOLDE_AJOUTER, Toast.LENGTH_SHORT).show();
                 Log.i(HomaUtils.TAG, HomaUtils.FIN + HomaUtils.ACTION + HomaUtils.ACTION_AJOUTER_SOLDE + HomaUtils.RESULTAT + HomaUtils.SUCCESS);
@@ -71,21 +82,16 @@ public class AjouterSoldeActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * fonction déclenché au clique du boutton retour.
+     *
+     * @param view {@code View}
+     */
     public void clickRetourAjouterSolde(View view) {
         Intent intent = getIntent();
 
         Intent intention = new Intent(this, MainActivity.class);
-        intention.putExtra("dateAccount", intent.getStringExtra("dateAccount").toString());
+        intention.putExtra("dateAccount", intent.getStringExtra("dateAccount"));
         startActivity(intention);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 }

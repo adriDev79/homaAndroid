@@ -15,12 +15,15 @@ import com.homa.R;
 import com.homa.bo.Revenu;
 import com.homa.dao.AppDataBase;
 import com.homa.dao.Connexion;
+import com.homa.dao.SqlService;
 import com.homa.utils.HomaToastUtils;
 import com.homa.utils.HomaUtils;
 
 import java.util.Date;
 
 public class ModifierRevenuActivity extends AppCompatActivity {
+
+    private final SqlService sqlService = new SqlService();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,21 @@ public class ModifierRevenuActivity extends AppCompatActivity {
         etDateReception.setText(intent.getStringExtra("dateReception"));
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    /**
+     * Fonction qui valide la modification du revenu.
+     *
+     * @param view {@code View}
+     */
     public void clickValiderModifRevenu(View view) {
         EditText etLibelle = findViewById(R.id.et_libelle_modif_revenu);
         String libelle = etLibelle.getText().toString().equals("") ? HomaUtils.EMPTY : etLibelle.getText().toString();
@@ -63,12 +81,11 @@ public class ModifierRevenuActivity extends AppCompatActivity {
             String today = date.toString();
 
             try {
-                new Thread(() -> {
-                    AppDataBase bdd = Connexion.getConnexion(ModifierRevenuActivity.this);
-                    bdd.revenuDao().update(id, libelle, montant, today, dateReception);
-                }).start();
+                new Thread(() -> sqlService.updateRevenu(this, id, libelle, montant, today, dateReception)).start();
+
                 Toast.makeText(this, HomaToastUtils.REVENU_MODIFIER, Toast.LENGTH_SHORT).show();
                 Log.i(HomaUtils.TAG, HomaUtils.FIN + HomaUtils.ACTION + HomaUtils.ACTION_MODIFIER_REVENU + HomaUtils.RESULTAT + HomaUtils.SUCCESS);
+
                 Intent intention = new Intent(this, MainActivity.class);
                 intention.putExtra("dateAccount", intent.getStringExtra("dateAccount"));
                 startActivity(intention);
@@ -83,6 +100,11 @@ public class ModifierRevenuActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Fonction qui supprime le revenu.
+     *
+     * @param view {@code View}
+     */
     public void clickSupprimerRevenu(View view) {
         Intent intent = getIntent();
         int id = Integer.parseInt(intent.getStringExtra("id"));
@@ -91,12 +113,11 @@ public class ModifierRevenuActivity extends AppCompatActivity {
             Log.i(HomaUtils.TAG, HomaUtils.DEBUT + HomaUtils.ACTION + HomaUtils.ACTION_SUPPRIMER_REVENU);
 
             try {
-                new Thread(() -> {
-                    AppDataBase bdd = Connexion.getConnexion(ModifierRevenuActivity.this);
-                    bdd.revenuDao().delete(id);
-                }).start();
+                new Thread(() -> sqlService.deleteRevenu(this, id)).start();
+
                 Toast.makeText(this, HomaToastUtils.REVENU_SUPPRIMER, Toast.LENGTH_SHORT).show();
                 Log.i(HomaUtils.TAG, HomaUtils.FIN + HomaUtils.ACTION + HomaUtils.ACTION_SUPPRIMER_REVENU + HomaUtils.RESULTAT + HomaUtils.SUCCESS);
+
                 Intent intention = new Intent(this, MainActivity.class);
                 intention.putExtra("dateAccount", intent.getStringExtra("dateAccount"));
                 startActivity(intention);
@@ -111,6 +132,11 @@ public class ModifierRevenuActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * fonction déclenché au clique du boutton retour.
+     *
+     * @param view {@code View}
+     */
     public void clickRetourModifRevenu(View view) {
         Intent intent = getIntent();
 
@@ -119,16 +145,11 @@ public class ModifierRevenuActivity extends AppCompatActivity {
         startActivity(intention);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
+    /**
+     * Affichage du calendrier pour la date de réception.
+     *
+     * @param view {@code View}
+     */
     public void clickCalendar(View view) {
         TextView textView = findViewById(R.id.tv_modif_reception);
         HomaUtils.calendar(view.getContext(), textView);

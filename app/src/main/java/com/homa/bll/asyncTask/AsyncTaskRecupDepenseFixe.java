@@ -5,9 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.homa.bo.DepenseFixe;
-import com.homa.bo.Revenu;
-import com.homa.dao.AppDataBase;
-import com.homa.dao.Connexion;
+import com.homa.dao.SqlService;
 
 import java.util.List;
 
@@ -51,8 +49,10 @@ public class AsyncTaskRecupDepenseFixe extends AsyncTask<Void, DepenseFixe, List
      */
     @Override
     protected List<DepenseFixe> doInBackground(Void... voids) {
-        AppDataBase bdd = Connexion.getConnexion(ctx);
-        List<DepenseFixe> depenseFixes = bdd.depenseFixeDao().getAllWhereDate(datePreviousMonth);
+        SqlService sqlService = new SqlService();
+
+        List<DepenseFixe> depenseFixes = sqlService.getAllDFWhereDate(ctx, datePreviousMonth);
+
         if (depenseFixes.size() > 0) {
             for (DepenseFixe df : depenseFixes) {
                 String dateReceptionPreviousMonth = df.getDateDePrelevement();
@@ -68,6 +68,7 @@ public class AsyncTaskRecupDepenseFixe extends AsyncTask<Void, DepenseFixe, List
                     } else {
                         month = month + 1;
                     }
+
                     String currentMonth = month < 10 ? "0" + month : String.valueOf(month);
                     dateReceptionCurrentMonth = date[0] + "/" + currentMonth + "/" + year;
                 }
@@ -78,7 +79,8 @@ public class AsyncTaskRecupDepenseFixe extends AsyncTask<Void, DepenseFixe, List
                 depenseFixe.setLibelle(df.getLibelle());
                 depenseFixe.setMontant(df.getMontant());
                 depenseFixe.setDateDePrelevement(dateReceptionCurrentMonth);
-                bdd.depenseFixeDao().insert(depenseFixe);
+
+                sqlService.insertDF(ctx, depenseFixe);
             }
         }
         return null;

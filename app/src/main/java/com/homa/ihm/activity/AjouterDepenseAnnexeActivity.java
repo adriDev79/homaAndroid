@@ -15,15 +15,13 @@ import android.widget.Toast;
 import com.homa.MainActivity;
 import com.homa.R;
 import com.homa.bo.DepenseAnnexe;
-import com.homa.bo.DepenseFixe;
-import com.homa.dao.AppDataBase;
-import com.homa.dao.Connexion;
+import com.homa.dao.SqlService;
 import com.homa.ihm.adapter.SpinnerAdapter;
 import com.homa.utils.HomaToastUtils;
 import com.homa.utils.HomaUtils;
 
-import java.util.Date;
 import java.util.LinkedList;
+import java.util.Objects;
 
 public class AjouterDepenseAnnexeActivity extends AppCompatActivity {
 
@@ -36,8 +34,7 @@ public class AjouterDepenseAnnexeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        LinkedList<String> typeDepense = new LinkedList<>();
-        typeDepense.addAll(HomaUtils.MAP_TYPE_DEPENSE.keySet());
+        LinkedList<String> typeDepense = new LinkedList<>(HomaUtils.MAP_TYPE_DEPENSE.keySet());
 
         SpinnerAdapter spinnerAdapter = new SpinnerAdapter(this,R.layout.ligne_spinner, typeDepense);
         spinnerAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
@@ -45,13 +42,28 @@ public class AjouterDepenseAnnexeActivity extends AppCompatActivity {
         spinner.setAdapter(spinnerAdapter);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    /**
+     * fonction déclencher au clique du boutton valider et qui ajoute une nouvelle dépense annexe.
+     *
+     * @param view {@code View}
+     */
     public void ajouterDepenseAnnexe(View view) {
         Spinner spTypeDepense = findViewById(R.id.spinner_depense_annexe);
         String typeDepense = spTypeDepense.getSelectedItem().toString().equals("") ? HomaUtils.EMPTY : spTypeDepense.getSelectedItem().toString();
         int idTypeDepense = 0;
 
         if (!typeDepense.equals(HomaUtils.EMPTY)) {
-            idTypeDepense = HomaUtils.MAP_TYPE_DEPENSE.get(typeDepense);
+            idTypeDepense = Objects.requireNonNull(HomaUtils.MAP_TYPE_DEPENSE.get(typeDepense));
         }
 
         EditText etLibelle = findViewById(R.id.et_libelle_depense_annexe);
@@ -72,7 +84,7 @@ public class AjouterDepenseAnnexeActivity extends AppCompatActivity {
         if (!HomaUtils.EMPTY.equals(libelle) && montant != 0f) {
             Log.i(HomaUtils.TAG, HomaUtils.DEBUT + HomaUtils.ACTION + HomaUtils.ACTION_AJOUTER_DEPENSE_ANNEXE);
             Intent intent = getIntent();
-            String dateCreation = intent.getStringExtra("dateAccount").toString();
+            String dateCreation = intent.getStringExtra("dateAccount");
 
             DepenseAnnexe depenseAnnexe = new DepenseAnnexe();
             depenseAnnexe.setLibelle(libelle);
@@ -85,11 +97,13 @@ public class AjouterDepenseAnnexeActivity extends AppCompatActivity {
 
             try {
                 new Thread(() -> {
-                    AppDataBase bdd = Connexion.getConnexion(AjouterDepenseAnnexeActivity.this);
-                    bdd.depenseAnnexeDao().insert(depenseAnnexe);
+                    SqlService sqlService = new SqlService();
+                    sqlService.insertDA(this, depenseAnnexe);
                 }).start();
+
                 Toast.makeText(this, HomaToastUtils.DEPENSE_ANNEXE_AJOUTER, Toast.LENGTH_SHORT).show();
                 Log.i(HomaUtils.TAG, HomaUtils.FIN + HomaUtils.ACTION + HomaUtils.ACTION_AJOUTER_DEPENSE_ANNEXE + HomaUtils.RESULTAT + HomaUtils.SUCCESS);
+
                 Intent intention = new Intent(this, MainActivity.class);
                 intention.putExtra("dateAccount", depenseAnnexe.getDateDeCreation());
                 startActivity(intention);
@@ -104,23 +118,33 @@ public class AjouterDepenseAnnexeActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * fonction déclenché au clique du boutton retour.
+     *
+     * @param view {@code View}
+     */
     public void clickRetourAjouterDepenseAnnexe(View view) {
         Intent intent = getIntent();
 
         Intent intention = new Intent(this, MainActivity.class);
-        intention.putExtra("dateAccount", intent.getStringExtra("dateAccount").toString());
+        intention.putExtra("dateAccount", intent.getStringExtra("dateAccount"));
         startActivity(intention);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
+    /**
+     * Affichage du calendrier pour la date du prélévement.
+     *
+     * @param view {@code View}
+     */
     public void clickCalendarAjoutDepenseAnnexe(View view) {
         HomaUtils.calendar(view.getContext(), findViewById(R.id.tv_date_prelevement_depense_annexe));
     }
 
+    /**
+     * Affichage du calendrier pour la date de fin du prélévement.
+     *
+     * @param view {@code View}
+     */
     public void clickCalendarAjoutDateFinDepenseAnnexe(View view) {
         HomaUtils.calendar(view.getContext(), findViewById(R.id.tv_date_fin_prelevement_depense_annexe));
     }

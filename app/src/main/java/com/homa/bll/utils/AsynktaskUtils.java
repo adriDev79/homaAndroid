@@ -14,6 +14,14 @@ import java.util.LinkedList;
 
 public class AsynktaskUtils {
 
+    /**
+     * Cette méthode permet d'éxecuter toute les taches secondaire.
+     *
+     * @param ctx context de l'activité{@code Context}
+     * @param dateAccount date des comptes {@code String}
+     * @param listViews liste de LisView {@code LinkedList<ListView>}
+     * @param linearLayouts liste de LinearLayout {@code LinkedList<LinearLayout>}
+     */
     public static void asyncTasksExecute(Context ctx, String dateAccount, LinkedList<ListView> listViews, LinkedList<LinearLayout> linearLayouts){
         AsyncTaskRevenu asyncTaskRevenu = new AsyncTaskRevenu(ctx, listViews.get(0), dateAccount, linearLayouts.get(0));
         asyncTaskRevenu.execute();

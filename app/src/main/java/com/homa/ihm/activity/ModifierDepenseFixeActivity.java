@@ -14,18 +14,21 @@ import android.widget.Toast;
 
 import com.homa.MainActivity;
 import com.homa.R;
-import com.homa.bo.DepenseFixe;
-import com.homa.bo.Revenu;
+
 import com.homa.dao.AppDataBase;
 import com.homa.dao.Connexion;
+import com.homa.dao.SqlService;
 import com.homa.ihm.adapter.SpinnerAdapter;
 import com.homa.utils.HomaToastUtils;
 import com.homa.utils.HomaUtils;
 
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.Objects;
 
 public class ModifierDepenseFixeActivity extends AppCompatActivity {
+
+    private final SqlService sqlService = new SqlService();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +39,7 @@ public class ModifierDepenseFixeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        LinkedList<String> typeDepense = new LinkedList<>();
-        typeDepense.addAll(HomaUtils.MAP_TYPE_DEPENSE.keySet());
+        LinkedList<String> typeDepense = new LinkedList<>(HomaUtils.MAP_TYPE_DEPENSE.keySet());
 
         SpinnerAdapter spinnerAdapter = new SpinnerAdapter(this,R.layout.ligne_spinner, typeDepense);
         spinnerAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
@@ -55,23 +57,34 @@ public class ModifierDepenseFixeActivity extends AppCompatActivity {
         etDatePrelevement.setText(intent.getStringExtra("datePrelevement"));
 
         CheckBox isPayer = findViewById(R.id.cb_payer_modif_depense_fixe);
-        if ("true".equals(intent.getStringExtra("isPayerDepenseFixe"))) {
-            isPayer.setChecked(true);
-        } else {
-            isPayer.setChecked(false);
-        }
+        isPayer.setChecked("true".equals(intent.getStringExtra("isPayerDepenseFixe")));
 
-        int idTypeDepense = (Integer) HomaUtils.MAP_TYPE_DEPENSE.get(intent.getStringExtra("typeDepenseFixe")) -1;
+        int idTypeDepense = (Integer) Objects.requireNonNull(HomaUtils.MAP_TYPE_DEPENSE.get(intent.getStringExtra("typeDepenseFixe"))) -1;
         spinner.setSelection(idTypeDepense);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    /**
+     * Fonction qui valide la modification de la dépense fixe.
+     *
+     * @param view {@code View}
+     */
     public void clickValiderModifDepenseFixe(View view) {
         Spinner spTypeDepense = findViewById(R.id.spinner_modif_depense_fixe);
         String typeDepense = spTypeDepense.getSelectedItem().toString().equals("") ? HomaUtils.EMPTY : spTypeDepense.getSelectedItem().toString();
         int idTypeDepense = 0;
 
         if (!typeDepense.equals(HomaUtils.EMPTY)) {
-            idTypeDepense = HomaUtils.MAP_TYPE_DEPENSE.get(typeDepense);
+            idTypeDepense = Objects.requireNonNull(HomaUtils.MAP_TYPE_DEPENSE.get(typeDepense));
         }
         EditText etLibelle = findViewById(R.id.et_libelle_modif_depense_fixe);
         String libelle = etLibelle.getText().toString().equals("") ? HomaUtils.EMPTY : etLibelle.getText().toString();
@@ -95,12 +108,11 @@ public class ModifierDepenseFixeActivity extends AppCompatActivity {
 
             try {
                 int finalIdTypeDepense = idTypeDepense;
-                new Thread(() -> {
-                    AppDataBase bdd = Connexion.getConnexion(ModifierDepenseFixeActivity.this);
-                    bdd.depenseFixeDao().update(id, libelle, montant, today, finalIdTypeDepense, datePrelevement, check);
-                }).start();
+                new Thread(() -> sqlService.updateDF(this, id, libelle, montant, today, finalIdTypeDepense, datePrelevement, check)).start();
+
                 Toast.makeText(this, HomaToastUtils.DEPENSE_FIXE_MODIFIER, Toast.LENGTH_SHORT).show();
                 Log.i(HomaUtils.TAG, HomaUtils.FIN + HomaUtils.ACTION + HomaUtils.ACTION_MODIFIER_DEPENSE_FIXE + HomaUtils.RESULTAT + HomaUtils.SUCCESS);
+
                 Intent intention = new Intent(this, MainActivity.class);
                 intention.putExtra("dateAccount", intent.getStringExtra("dateAccount"));
                 startActivity(intention);
@@ -115,6 +127,11 @@ public class ModifierDepenseFixeActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Fonction qui supprime la dépense fixe.
+     *
+     * @param view {@code View}
+     */
     public void clickSupprimerDepenseFixe(View view) {
         Intent intent = getIntent();
         int id = Integer.parseInt(intent.getStringExtra("idDepenseFixe"));
@@ -123,12 +140,11 @@ public class ModifierDepenseFixeActivity extends AppCompatActivity {
             Log.i(HomaUtils.TAG, HomaUtils.DEBUT + HomaUtils.ACTION + HomaUtils.ACTION_SUPPRIMER_DEPENSE_FIXE);
 
             try {
-                new Thread(() -> {
-                    AppDataBase bdd = Connexion.getConnexion(ModifierDepenseFixeActivity.this);
-                    bdd.depenseFixeDao().delete(id);
-                }).start();
+                new Thread(() -> sqlService.deleteDF(this, id)).start();
+
                 Toast.makeText(this, HomaToastUtils.DEPENSE_FIXE_SUPPRIMER, Toast.LENGTH_SHORT).show();
                 Log.i(HomaUtils.TAG, HomaUtils.FIN + HomaUtils.ACTION + HomaUtils.ACTION_SUPPRIMER_DEPENSE_FIXE + HomaUtils.RESULTAT + HomaUtils.SUCCESS);
+
                 Intent intention = new Intent(this, MainActivity.class);
                 intention.putExtra("dateAccount", intent.getStringExtra("dateAccount"));
                 startActivity(intention);
@@ -143,6 +159,11 @@ public class ModifierDepenseFixeActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * fonction déclenché au clique du boutton retour.
+     *
+     * @param view {@code View}
+     */
     public void clickRetourModifDepenseFixe(View view) {
         Intent intent = getIntent();
 
@@ -151,16 +172,11 @@ public class ModifierDepenseFixeActivity extends AppCompatActivity {
         startActivity(intention);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
+    /**
+     * Affichage du calendrier pour la date du prélévement.
+     *
+     * @param view {@code View}
+     */
     public void clickCalendarModifDepenseFixe(View view) {
         HomaUtils.calendar(view.getContext(), findViewById(R.id.tv_modif_date_prelevement_depense_fixe));
     }
