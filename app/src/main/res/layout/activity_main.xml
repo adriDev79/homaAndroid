@@ -33,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#273746"
                     android:text=""
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     android:layout_marginTop="8dp"
                     android:layout_marginLeft="5dp"/>
@@ -46,7 +46,39 @@
                     android:src="@drawable/ic_baseline_calendar_today_24"
                     android:onClick="clickCalendarDateCompte"
                     />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_recuperer_revenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/ll_date_compte">
 
+                <TextView
+                    android:id="@+id/tv_recup_revenu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/recup_revenus"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#273746"/>
+
+                <ImageButton
+                    android:id="@+id/ibtn_valider"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:src="@drawable/ic_baseline_check_24"
+                    android:onClick="recupRevenuMoisPrecedent"/>
+
+                <ImageButton
+                    android:id="@+id/ibtn_refuser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:src="@drawable/ic_baseline_clear_24"
+                    android:onClick="annulerRecupRevenus"/>
 
             </LinearLayout>
 
@@ -55,7 +87,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:name="com.homa.ihm.fragment.EnTeteRevenuFragment"
-                android:layout_below="@+id/ll_date_compte"
+                android:layout_below="@+id/ll_recuperer_revenu"
                 tools:ignore="MissingConstraints" />
 
             <ListView
@@ -66,13 +98,47 @@
                 android:nestedScrollingEnabled="true">
             </ListView>
 
+            <LinearLayout
+                android:id="@+id/ll_recuperer_depense_fixe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/lv_revenu">
+
+                <TextView
+                    android:id="@+id/tv_recup_depense_fixe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/recup_revenus"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#273746"/>
+
+                <ImageButton
+                    android:id="@+id/ibtn_valider_DF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:src="@drawable/ic_baseline_check_24"
+                    android:onClick="recupDFMoisPrecedent"/>
+
+                <ImageButton
+                    android:id="@+id/ibtn_refuser_DF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:src="@drawable/ic_baseline_clear_24"
+                    android:onClick="annulerRecupDF"/>
+
+            </LinearLayout>
 
             <fragment
                 android:id="@+id/fragment_en_tete_depense_fixe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:name="com.homa.ihm.fragment.EnTeteDepenseFixeFragment"
-                android:layout_below="@id/lv_revenu"
+                android:layout_below="@id/ll_recuperer_depense_fixe"
                 android:layout_marginTop="5dp"/>
 
             <ListView

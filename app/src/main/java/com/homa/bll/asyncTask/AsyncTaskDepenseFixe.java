@@ -4,9 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.homa.R;
@@ -38,8 +40,12 @@ public class AsyncTaskDepenseFixe extends AsyncTask<Void, DepenseFixe, List<Depe
     /**
      * Date des comptes en cours {@code Date}
      */
-
     private String dateAccount;
+
+    /**
+     * élément d'affichage du message pour récupérer les dépenses du mois précédent {@code LinearLayout}
+     */
+    private LinearLayout llRecupDepenseFixe;
 
     /**
      * Constructeur
@@ -56,6 +62,16 @@ public class AsyncTaskDepenseFixe extends AsyncTask<Void, DepenseFixe, List<Depe
         this.ctx = ctx;
         this.listView = view;
         this.dateAccount = dateAccount;
+    }
+
+    /**
+     * Constructeur
+     */
+    public AsyncTaskDepenseFixe(Context ctx, ListView listView, String dateAccount, LinearLayout llRecupDepenseFixe) {
+        this.ctx = ctx;
+        this.listView = listView;
+        this.dateAccount = dateAccount;
+        this.llRecupDepenseFixe = llRecupDepenseFixe;
     }
 
     /**
@@ -79,6 +95,22 @@ public class AsyncTaskDepenseFixe extends AsyncTask<Void, DepenseFixe, List<Depe
     @Override
     protected void onPostExecute(List<DepenseFixe> depenseFixes) {
         super.onPostExecute(depenseFixes);
+        Log.i(HomaUtils.TAG, "je passe ici");
+
+        Log.i(HomaUtils.TAG, "taille " + depenseFixes.size());
+
+        if(depenseFixes.size() == 0) {
+            if (llRecupDepenseFixe != null) {
+                HomaUtils.visibiltyLinearLayout(llRecupDepenseFixe, View.VISIBLE, 100);
+                Log.i(HomaUtils.TAG, "je suis visible");
+            }
+        } else {
+            if (llRecupDepenseFixe != null) {
+                HomaUtils.visibiltyLinearLayout(llRecupDepenseFixe, View.INVISIBLE, 0);
+                Log.i(HomaUtils.TAG, "je ne suis pas visible");
+            }
+        }
+
         ListDepenseFixeAdapter listDepenseFixeAdapter = new ListDepenseFixeAdapter(ctx, R.layout.ligne_list_depense_fixe, depenseFixes);
         listView.setAdapter(listDepenseFixeAdapter);
         ViewGroup.LayoutParams params = listView.getLayoutParams();

@@ -4,11 +4,13 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -35,6 +38,7 @@ public class HomaUtils {
     public static final String NON_RENSEIGNE = "Pas de date";
     public static final String AUCUNE = "Aucune";
     public static final int DELAY_LAUNCHER_PAGE = 4300;
+    public static final LinkedList<String> MAP_MONTHS = mapMonths();
     // LOG ACTIVITY
     public static final String TAG = "HOMALOG";
 
@@ -119,9 +123,9 @@ public class HomaUtils {
             params.height = 0;
             listView.setLayoutParams(params);
         } else {
+            listView.setVisibility(View.VISIBLE);
             asyncTask.execute();
             button.setText(R.string.moins);
-            listView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -170,5 +174,30 @@ public class HomaUtils {
     public static String dateFormat(String pattern, Object date) {
         SimpleDateFormat sdf = new SimpleDateFormat(pattern, Locale.FRANCE);
         return sdf.format(date);
+    }
+
+    private static LinkedList<String> mapMonths() {
+        LinkedList<String> months = new LinkedList<>();
+        months.add("janvier");
+        months.add("février");
+        months.add("mars");
+        months.add("avril");
+        months.add("mai");
+        months.add("juin");
+        months.add("juillet");
+        months.add("août");
+        months.add("septembre");
+        months.add("octobre");
+        months.add("novembre");
+        months.add("décembre");
+
+        return months;
+    }
+
+    public static void visibiltyLinearLayout(LinearLayout linearLayout, int visibily, int height) {
+        linearLayout.setVisibility(visibily);
+        ViewGroup.LayoutParams params = linearLayout.getLayoutParams();
+        params.height = height;
+        linearLayout.setLayoutParams(params);
     }
 }

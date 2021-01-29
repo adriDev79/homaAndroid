@@ -37,7 +37,8 @@
         android:textColor="@color/white"
         android:textStyle="bold"
         android:layout_marginRight="5dp"
-        android:onClick="visibility"/>
+        android:onClick="visibilityListDA"
+        tools:ignore="OnClick" />
 
 
 </FrameLayout>

@@ -3,11 +3,14 @@ package com.homa.bll.asyncTask;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.homa.R;
@@ -42,6 +45,11 @@ public class AsyncTaskRevenu extends AsyncTask<Void, Revenu, List<Revenu>> {
     private String dateAccount;
 
     /**
+     * élément d'affichage du message pour récupérer les revenus du mois précédent {@code LinearLayout}
+     */
+    private LinearLayout llRecupRevenu;
+
+    /**
      * Constructeur
      */
     public AsyncTaskRevenu(Context ctx, ListView listView) {
@@ -56,7 +64,16 @@ public class AsyncTaskRevenu extends AsyncTask<Void, Revenu, List<Revenu>> {
         this.ctx = ctx;
         this.listView = listView;
         this.dateAccount = dateAccount;
-        Log.i(HomaUtils.TAG, "date choisis constructeur " + dateAccount);
+    }
+
+    /**
+     * Constructeur
+     */
+    public AsyncTaskRevenu(Context ctx, ListView listView, String dateAccount, LinearLayout llRecupRevenu) {
+        this.ctx = ctx;
+        this.listView = listView;
+        this.dateAccount = dateAccount;
+        this.llRecupRevenu = llRecupRevenu;
     }
 
     /**
@@ -80,11 +97,22 @@ public class AsyncTaskRevenu extends AsyncTask<Void, Revenu, List<Revenu>> {
     @Override
     protected void onPostExecute(List<Revenu> revenus) {
         super.onPostExecute(revenus);
-//
+
+        if(revenus.size() == 0) {
+            if (llRecupRevenu != null) {
+                HomaUtils.visibiltyLinearLayout(llRecupRevenu, View.VISIBLE, 100);
+            }
+        } else {
+            if (llRecupRevenu != null) {
+                HomaUtils.visibiltyLinearLayout(llRecupRevenu, View.INVISIBLE, 0);
+            }
+        }
+
         ListRevenuAdapter listRevenuAdapter = new ListRevenuAdapter(ctx, R.layout.ligne_list_revenu, revenus);
         listView.setAdapter(listRevenuAdapter);
 
         // Modification de la taille de la liste en fonction du nombre de revenus
+
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = revenus.size() * 250;
         listView.setLayoutParams(params);

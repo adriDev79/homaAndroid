@@ -29,4 +29,5 @@
     <string name="fin">Fin:</string>
     <string name="fin_prelevement">Fin du prélévement:</string>
     <string name="btnn_fin_prel">fin du prélévement</string>
+    <string name="recup_revenus">Voulez-vous récupérer vos revenus du mois dernier ?</string>
 </resources>

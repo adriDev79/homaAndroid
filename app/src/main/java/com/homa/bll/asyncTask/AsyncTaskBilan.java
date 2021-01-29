@@ -3,6 +3,7 @@ package com.homa.bll.asyncTask;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
@@ -11,6 +12,7 @@ import com.homa.bo.Total;
 import com.homa.dao.AppDataBase;
 import com.homa.dao.Connexion;
 import com.homa.ihm.adapter.ListBilanAdapter;
+import com.homa.utils.HomaUtils;
 
 import java.util.ArrayList;
 import java.util.List;

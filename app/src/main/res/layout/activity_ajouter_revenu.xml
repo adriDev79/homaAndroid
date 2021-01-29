@@ -83,7 +83,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="5dp"
         android:backgroundTint="#273746"
-        android:text="@string/choisir_une_date"
+        android:text="Date de reception"
         android:textSize="10sp"
         android:layout_below="@id/tv_label_reception"
         android:onClick="clickCalendar"
